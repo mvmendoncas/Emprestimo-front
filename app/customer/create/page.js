@@ -1,8 +1,9 @@
 "use client";
 
+import Link from 'next/link';
 import { useState } from 'react';
 
-const RegisterAgiota = () => {
+const RegisterCustomer = () => {
   const [formData, setFormData] = useState({
     name: '',
     cpf: '',
@@ -14,8 +15,9 @@ const RegisterAgiota = () => {
     city: '',
     state: '',
     cep: '',
-    fees: '',
-    billingMethod: '',
+    occupation: '',
+    workplace: '',
+    workPhone: '',
   });
 
   const handleChange = (e) => {
@@ -26,7 +28,7 @@ const RegisterAgiota = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const agiotaData = {
+    const customerData = {
       name: formData.name,
       cpf: formData.cpf,
       phone: formData.phone,
@@ -39,21 +41,22 @@ const RegisterAgiota = () => {
         state: formData.state,
         cep: formData.cep,
       },
-      fees: parseFloat(formData.fees),
-      billingMethod: formData.billingMethod,
+      occupation: formData.occupation,
+      workplace: formData.workplace,
+      workPhone: formData.workPhone,
     };
 
     try {
-      const response = await fetch('http://localhost:8080/agiota', {
+      const response = await fetch('http://localhost:8080/customer', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(agiotaData),
+        body: JSON.stringify(customerData),
       });
 
       if (response.ok) {
-        alert('Agiota cadastrado com sucesso!');
+        alert('Cliente cadastrado com sucesso!');
         setFormData({
           name: '',
           cpf: '',
@@ -65,35 +68,38 @@ const RegisterAgiota = () => {
           city: '',
           state: '',
           cep: '',
-          fees: '',
-          billingMethod: '',
+          occupation: '',
+          workplace: '',
+          workPhone: '',
         });
       } else {
         const errorData = await response.json();
-        alert(`Erro ao cadastrar agiota: ${errorData.message || response.statusText}`);
+        alert(`Erro ao cadastrar cliente: ${errorData.message || response.statusText}`);
       }
     } catch (error) {
-      console.error('Erro ao cadastrar agiota:', error);
-      alert('Erro ao cadastrar agiota. Por favor, tente novamente.');
+      console.error('Erro ao cadastrar cliente:', error);
+      alert('Erro ao cadastrar cliente. Por favor, tente novamente.');
     }
   };
 
   return (
     <div className="container mt-5">
-      <h2>Cadastrar Agiota</h2>
+      <h2>Cadastro de Cliente</h2>
       <form onSubmit={handleSubmit}>
         {[
           { label: 'Nome', name: 'name' },
           { label: 'CPF', name: 'cpf' },
           { label: 'Telefone', name: 'phone' },
           { label: 'Rua', name: 'road' },
-          { label: 'Place', name: 'place' },
+          { label: 'Bairro', name: 'place' },
           { label: 'Número', name: 'number' },
-          { label: 'Bairro', name: 'neighborhood' },
+          { label: 'Complemento', name: 'neighborhood' },
           { label: 'Cidade', name: 'city' },
           { label: 'Estado', name: 'state' },
           { label: 'CEP', name: 'cep' },
-          { label: 'Taxa de Juros', name: 'fees', type: 'number' },
+          { label: 'Profissão', name: 'occupation' },
+          { label: 'Local de Trabalho', name: 'workplace' },
+          { label: 'Telefone do Trabalho', name: 'workPhone' },
         ].map(({ label, name, type = 'text' }) => (
           <div className="mb-3" key={name}>
             <label className="form-label">{label}</label>
@@ -107,26 +113,14 @@ const RegisterAgiota = () => {
             />
           </div>
         ))}
-        <div className="mb-3">
-          <label className="form-label">Método de cobrança</label>
-          <select
-            className="form-control"
-            name="billingMethod"
-            value={formData.billingMethod}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a method</option>
-            <option value="weekly">Semanalmente</option>
-            <option value="monthly">Mensalmente</option>
-          </select>
-        </div>
+        <Link href="/customer">
         <button type="submit" className="btn btn-primary">
           Cadastrar
         </button>
+        </Link>
       </form>
     </div>
   );
 };
 
-export default RegisterAgiota;
+export default RegisterCustomer;

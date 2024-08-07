@@ -1,7 +1,7 @@
 import './globals.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import Header from './components/Header';
-import Footer from './components/Footer';
+import Header from './components/header/page';
+import Footer from './components/footer/page';
 
 export const metadata = {
   title: 'Agiota App',

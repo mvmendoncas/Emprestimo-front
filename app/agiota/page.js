@@ -1,6 +1,6 @@
 "use client";
 
-import RegisterAgiota from '../agiota/RegisterAgiota';
+import RegisterAgiota from './create/RegisterAgiota';
 
 const CadastrarAgiota = () => {
   return (

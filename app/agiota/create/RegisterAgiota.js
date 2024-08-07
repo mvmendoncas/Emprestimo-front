@@ -81,7 +81,7 @@ const RegisterAgiota = () => {
       <h2>Register Agiota</h2>
       <form onSubmit={handleSubmit}>
         <div className="mb-3">
-          <label className="form-label">Name</label>
+          <label className="form-label">Nome</label>
           <input
             type="text"
             className="form-control"
@@ -103,7 +103,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Phone</label>
+          <label className="form-label">Telefone</label>
           <input
             type="text"
             className="form-control"
@@ -114,7 +114,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Road</label>
+          <label className="form-label">Rua</label>
           <input
             type="text"
             className="form-control"
@@ -136,7 +136,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Number</label>
+          <label className="form-label">Número</label>
           <input
             type="text"
             className="form-control"
@@ -147,7 +147,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Neighborhood</label>
+          <label className="form-label">Bairro</label>
           <input
             type="text"
             className="form-control"
@@ -158,7 +158,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">City</label>
+          <label className="form-label">Cidade</label>
           <input
             type="text"
             className="form-control"
@@ -169,7 +169,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">State</label>
+          <label className="form-label">Estado</label>
           <input
             type="text"
             className="form-control"
@@ -191,7 +191,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Fees</label>
+          <label className="form-label">Taxa de Juros</label>
           <input
             type="number"
             className="form-control"
@@ -202,7 +202,7 @@ const RegisterAgiota = () => {
           />
         </div>
         <div className="mb-3">
-          <label className="form-label">Billing Method</label>
+          <label className="form-label">Método de cobrança</label>
           <select
             className="form-control"
             name="billingMethod"
@@ -211,8 +211,8 @@ const RegisterAgiota = () => {
             required
           >
             <option value="">Select a method</option>
-            <option value="weekly">Weekly</option>
-            <option value="monthly">Monthly</option>
+            <option value="weekly">Semanalmente</option>
+            <option value="monthly">Mensalmente</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">

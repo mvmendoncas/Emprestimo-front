@@ -21,16 +21,16 @@ const ListAgiotas = () => {
 
   return (
     <div className="container mt-5">
-      <h2>List of Agiotas</h2>
+      <h2>Agiotas Cadastrados</h2>
       <table className="table table-bordered">
         <thead>
           <tr>
-            <th>Name</th>
+            <th>Nome</th>
             <th>CPF</th>
-            <th>Phone</th>
-            <th>Address</th>
-            <th>Fees</th>
-            <th>Billing Method</th>
+            <th>Telefone</th>
+            <th>Endereço</th>
+            <th>Taxa de Juros</th>
+            <th>Método de Cobrança</th>
           </tr>
         </thead>
         <tbody>

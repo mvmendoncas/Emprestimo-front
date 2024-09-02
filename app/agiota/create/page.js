@@ -1,132 +1,108 @@
 "use client";
 
+import { createAgiota } from '@/app/lib/agiota/functions';
 import { useState } from 'react';
+import { useRouter } from 'next/navigation'
+
 
 const RegisterAgiota = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: '',
     cpf: '',
     phone: '',
-    road: '',
-    place: '',
-    number: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-    cep: '',
+    adress: {
+      road: '',
+      place: '',
+      number: '',
+      neighborhood: '',
+      city: '',
+      state: '',
+      cep: ''
+    },
     fees: '',
     billingMethod: '',
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const [parent, child] = name.split('.');
+
+    if (child) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    const agiotaData = {
-      name: formData.name,
-      cpf: formData.cpf,
-      phone: formData.phone,
-      adress: {
-        road: formData.road,
-        place: formData.place,
-        number: formData.number,
-        neighborhood: formData.neighborhood,
-        city: formData.city,
-        state: formData.state,
-        cep: formData.cep,
-      },
-      fees: parseFloat(formData.fees),
-      billingMethod: formData.billingMethod,
-    };
-
-    try {
-      const response = await fetch('http://localhost:8080/agiota', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(agiotaData),
-      });
-
-      if (response.ok) {
-        alert('Agiota cadastrado com sucesso!');
-        setFormData({
-          name: '',
-          cpf: '',
-          phone: '',
-          road: '',
-          place: '',
-          number: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          cep: '',
-          fees: '',
-          billingMethod: '',
-        });
-      } else {
-        const errorData = await response.json();
-        alert(`Erro ao cadastrar agiota: ${errorData.message || response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Erro ao cadastrar agiota:', error);
-      alert('Erro ao cadastrar agiota. Por favor, tente novamente.');
+      createAgiota(formData)
+        .then(
+          (result) => {
+            console.log('Success:', result);
+            router.push('/agiota')
+          }
+        )
+        .catch (
+          (error) => {console.error('Error:', error); }
+        )
     }
-  };
 
   return (
-    <div className="container mt-5">
-      <h2>Cadastrar Agiota</h2>
-      <form onSubmit={handleSubmit}>
-        {[
-          { label: 'Nome', name: 'name' },
-          { label: 'CPF', name: 'cpf' },
-          { label: 'Telefone', name: 'phone' },
-          { label: 'Rua', name: 'road' },
-          { label: 'Place', name: 'place' },
-          { label: 'Número', name: 'number' },
-          { label: 'Bairro', name: 'neighborhood' },
-          { label: 'Cidade', name: 'city' },
-          { label: 'Estado', name: 'state' },
-          { label: 'CEP', name: 'cep' },
-          { label: 'Taxa de Juros', name: 'fees', type: 'number' },
-        ].map(({ label, name, type = 'text' }) => (
-          <div className="mb-3" key={name}>
-            <label className="form-label">{label}</label>
-            <input
-              type={type}
-              className="form-control"
-              name={name}
-              value={formData[name]}
-              onChange={handleChange}
-              required
-            />
-          </div>
-        ))}
-        <div className="mb-3">
-          <label className="form-label">Método de cobrança</label>
-          <select
-            className="form-control"
-            name="billingMethod"
-            value={formData.billingMethod}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Select a method</option>
-            <option value="weekly">Semanalmente</option>
-            <option value="monthly">Mensalmente</option>
-          </select>
+        <div className="container mt-5">
+            <h2>Editar Agiota</h2>
+            <form onSubmit={handleSubmit}>
+                {[
+                    { label: 'Nome', name: 'name', type: 'text', value: formData.name },
+                    { label: 'CPF', name: 'cpf', type: 'text', value: formData.cpf },
+                    { label: 'Telefone', name: 'phone', type: 'text', value: formData.phone },
+                    { label: 'Rua', name: 'adress.road', type: 'text', value: formData.adress.road },
+                    { label: 'Bairro', name: 'adress.neighborhood', type: 'text', value: formData.adress.neighborhood },
+                    { label: 'Cidade', name: 'adress.city', type: 'text', value: formData.adress.city },
+                    { label: 'Estado', name: 'adress.state', type: 'text', value: formData.adress.state },
+                    { label: 'CEP', name: 'adress.cep', type: 'text', value: formData.adress.cep },
+                    { label: 'Taxas', name: 'fees', type: 'number', value: formData.fees },
+                ].map((input, index) => (
+                    <div key={index} className="mb-3">
+                        <label htmlFor={input.name} className="form-label">{input.label}</label>
+                        <input
+                            type={input.type}
+                            className="form-control"
+                            id={input.name}
+                            name={input.name}
+                            value={input.value}
+                            onChange={handleChange}
+                        />
+                    </div>
+                ))}
+                <div className="mb-3">
+                    <label className="form-label">Método de cobrança</label>
+                    <select
+                        className="form-control"
+                        name="billingMethod"
+                        value={formData.billingMethod}
+                        onChange={handleChange}
+                        required
+                    >
+                        <option value="">Select a method</option>
+                        <option value="weekly">Semanalmente</option>
+                        <option value="monthly">Mensalmente</option>
+                    </select>
+                </div>
+                <button type="submit" className="btn btn-primary">Salvar</button>
+            </form>
         </div>
-        <button type="submit" className="btn btn-primary">
-          Cadastrar
-        </button>
-      </form>
-    </div>
-  );
+    );
 };
 
-export default RegisterAgiota;
+export default EditAgiota;

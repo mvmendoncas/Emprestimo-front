@@ -2,86 +2,64 @@
 
 import Link from 'next/link';
 import { useState } from 'react';
+import { format } from 'date-fns';
+import { useRouter } from 'next/navigation'
+import { createCustomer } from '@/app/lib/customer/functions';
 
 const RegisterCustomer = () => {
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     name: '',
     cpf: '',
     phone: '',
-    road: '',
-    place: '',
-    number: '',
-    neighborhood: '',
-    city: '',
-    state: '',
-    cep: '',
     occupation: '',
     workplace: '',
     workPhone: '',
+    adress: {
+      road: '',
+      place: '',
+      number: '',
+      neighborhood: '',
+      city: '',
+      state: '',
+      cep: ''
+    }
   });
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const [parent, child] = name.split('.');
+
+    if (child) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    const customerData = {
-      name: formData.name,
-      cpf: formData.cpf,
-      phone: formData.phone,
-      adress: {
-        road: formData.road,
-        place: formData.place,
-        number: formData.number,
-        neighborhood: formData.neighborhood,
-        city: formData.city,
-        state: formData.state,
-        cep: formData.cep,
-      },
-      occupation: formData.occupation,
-      workplace: formData.workplace,
-      workPhone: formData.workPhone,
-    };
-
-    try {
-      const response = await fetch('http://localhost:8080/customer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(customerData),
-      });
-
-      if (response.ok) {
-        alert('Cliente cadastrado com sucesso!');
-        setFormData({
-          name: '',
-          cpf: '',
-          phone: '',
-          road: '',
-          place: '',
-          number: '',
-          neighborhood: '',
-          city: '',
-          state: '',
-          cep: '',
-          occupation: '',
-          workplace: '',
-          workPhone: '',
-        });
-      } else {
-        const errorData = await response.json();
-        alert(`Erro ao cadastrar cliente: ${errorData.message || response.statusText}`);
-      }
-    } catch (error) {
-      console.error('Erro ao cadastrar cliente:', error);
-      alert('Erro ao cadastrar cliente. Por favor, tente novamente.');
-    }
-  };
-
+    createCustomer(formData)
+      .then(
+        (result) => {
+          console.log('Success:', result);
+          router.push('/customer')
+        }
+      )
+      .catch (
+        (error) => {console.error('Error:', error); }
+      )
+  } 
+  
   return (
     <div className="container mt-5">
       <h2>Cadastro de Cliente</h2>
@@ -90,13 +68,13 @@ const RegisterCustomer = () => {
           { label: 'Nome', name: 'name' },
           { label: 'CPF', name: 'cpf' },
           { label: 'Telefone', name: 'phone' },
-          { label: 'Rua', name: 'road' },
-          { label: 'Bairro', name: 'place' },
-          { label: 'Número', name: 'number' },
-          { label: 'Complemento', name: 'neighborhood' },
-          { label: 'Cidade', name: 'city' },
-          { label: 'Estado', name: 'state' },
-          { label: 'CEP', name: 'cep' },
+          { label: 'Rua', name: 'adress.road' },
+          { label: 'Bairro', name: 'adress.place' },
+          { label: 'Número', name: 'adress.number' },
+          { label: 'Complemento', name: 'adress.neighborhood' },
+          { label: 'Cidade', name: 'adress.city' },
+          { label: 'Estado', name: 'adress.state' },
+          { label: 'CEP', name: 'adress.cep' },
           { label: 'Profissão', name: 'occupation' },
           { label: 'Local de Trabalho', name: 'workplace' },
           { label: 'Telefone do Trabalho', name: 'workPhone' },
@@ -113,11 +91,9 @@ const RegisterCustomer = () => {
             />
           </div>
         ))}
-        <Link href="/customer">
-        <button type="submit" className="btn btn-primary">
-          Cadastrar
-        </button>
-        </Link>
+       <div className="form-control mt-6">
+              <button type="submit" className="btn btn-primary">Submit</button>
+            </div>
       </form>
     </div>
   );

@@ -2,7 +2,7 @@
 
 import RegisterCustomer from "./create/page";
 
-const CadastrarCustomer = () => {
+const customerPage = () => {
   return (
     <div className="container mx-auto mt-10 p-6 text-center ">
       <h1 className="text-4xl font-bold mb-4">Página do Cliente!</h1>
@@ -26,4 +26,4 @@ const CadastrarCustomer = () => {
   );
 };
 
-export default CadastrarCustomer;
+export default customerPage;

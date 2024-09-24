@@ -2,7 +2,7 @@
 "use client"; // Necessário para usar hooks do React
 import Link from 'next/link';
 import { useSelector } from 'react-redux';
-import Login from '../../components/Login/page'; // Ajustar o caminho conforme necessário
+import Login from '../components/Login/page'; // Ajustar o caminho conforme necessário
 import style from './HomePage.module.css'
 const HomePage = () => {
   const showLogin = useSelector((state) => state.ui.showLogin);
@@ -17,6 +17,9 @@ const HomePage = () => {
 
   return (
     <div className="container mx-auto mt-10 p-6 text-center ">
+        <Link href="/">
+            voltar para o login
+        </Link>
       <h1 className="text-4xl font-bold mb-4">Seja Bem-vindo!</h1>
       <p className="text-lg mb-8">
         Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.

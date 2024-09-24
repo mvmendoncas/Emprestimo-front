@@ -1,98 +1,77 @@
 /* app/components/Login/login.module.css */
 
-.loginContent {
-    position: relative; /* Necessário para posicionamento absoluto dos elementos filhos */
-    width: 500px; /* Defina a largura conforme necessário */
-    background-color: white;
-    color: black;
-    border-radius: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    gap: 20px;
-    
-    padding: 30px;
-  }
-  
-  .login__content__button_close {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background-color: transparent;
-    border: none;
-    cursor: pointer;
-  }
-  
-  .login__content__button_close img {
-    height: 24px; /* Ajuste o tamanho conforme necessário */
-    width: 24px;
-  }
-  
-  /* Outros estilos permanecem inalterados */
-  
-  .login__form {
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    gap: 1.5rem;
-  }
-  
-  .login__title .title {
-    color: blue;
-    text-shadow: 1px 0 blue;
-    font-size: 32px; /* Ajuste o tamanho conforme necessário */
-  }
-  
-  .login__title .subtitle {
-    margin-top: 10px;
-    font-size: 16px;
-    text-align: center;
-  }
-  
-  .login__content__label p {
-    margin-bottom: 5px;
-    font-size: 14px;
-  }
-  
-  .login__content__label input {
-    width: 100%;
-    padding: 8px 12px;
-    border: 1px blue solid;
-    border-radius: 8px;
-    font-size: 14px;
-  }
-  
-  .login__content__label input:focus {
-    outline: none;
-    border-color: darkblue;
-  }
-  
-  .login__content_errorLogin {
-    color: red;
-    font-size: 14px;
-  }
-  
-  .login__content__button_login {
-    color: white;
-    background-color: blue;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 6px;
-    font-size: 16px;
-    font-weight: 600;
-    width: 100%;
-    cursor: pointer;
-    transition: background-color 0.4s;
-  }
-  
-  .login__content__button_login:hover {
-    background-color: darkblue;
-  }
-  
-  .active {
-    background-color: darkblue;  
-  }
-  
+.login__form {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 0.8rem;
+  margin-top: 2rem;
+}
+
+.login__form .subtitle{
+  margin-bottom: 0;
+}
+
+.login__title .title {
+  color: black;
+  font-size: 36px;
+  text-align: center;
+  font-weight: 900;
+}
+
+.login__content__label p {
+  margin-bottom: 5px;
+}
+
+.login__content__label input {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px darkgrey solid;
+  border-radius: 0.2rem;
+  font-size: 16px;
+}
+
+.login__button{
+  margin-top: 0.8rem;
+}
+
+.login__content__label input:focus {
+  outline: none;
+  border-color: darkblue;
+}
+
+.login__content_errorLogin {
+  color: red;
+  font-size: 14px;
+}
+
+.login__content__button_login {
+  color: white;
+  background-color: blue;
+  padding: 16px 28px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  width: 100%;
+  cursor: pointer;
+  transition: background-color 0.4s;
+  margin-top: 1rem;
+}
+
+.login__content__button_login:hover {
+  background-color: darkblue;
+}
+
+.active {
+  background-color: darkblue;
+}
+
+.createAccountLink a {
+  color: darkgrey;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.createAccountLink a:hover {
+  color: grey;
+}

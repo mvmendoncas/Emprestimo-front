@@ -13,7 +13,6 @@ const RegisterBorrowing = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
-    fees: '',
     value: '',
     numberInstallments: '',
     payday: '',
@@ -58,18 +57,8 @@ const RegisterBorrowing = () => {
 
   const handleSubmit = async (e) => {
       e.preventDefault();
-
-      if (!userId) {
-        alert('ID do usuário não disponível. Por favor, aguarde ou faça login novamente.');
-        return;
-      }
   
-      const borrowingData = {
-        ...formData,
-        agiotaId: userId, // Incluir o userId nos dados
-      };
-  
-        registerBorrowing(borrowingData)
+        registerBorrowing(formData)
           .then(
             (result) => {
               console.log('Success:', result);
@@ -90,7 +79,6 @@ const RegisterBorrowing = () => {
       <h2>Cadastrar Empréstimo</h2>
       <form onSubmit={handleSubmit}>
         {[
-          { label: 'Taxa de Juros', name: 'fees', type: 'number' },
           { label: 'Valor', name: 'value', type: 'number' },
           { label: 'Número de Parcelas', name: 'numberInstallments', type: 'number' },
           { label: 'Dia do Pagamento', name: 'payday', type: 'number' },

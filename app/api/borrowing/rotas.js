@@ -8,3 +8,7 @@ export const getCurrentUserId = async () => {
 export async function registerBorrowing(data) {
     return await api.post("/borrowing", data)
 }
+
+export async function listBorrowing() {
+    return await api.get("/borrowing")
+}

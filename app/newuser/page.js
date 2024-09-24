@@ -16,27 +16,31 @@ const HomePage = () => {
   }
 
   return (
-    <div className="container mx-auto mt-10 p-6 text-center ">
-        <Link href="/">
-            voltar para o login
-        </Link>
-      <h1 className="text-4xl font-bold mb-4">Seja Bem-vindo!</h1>
-      <p className="text-lg mb-8">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla accumsan, metus ultrices eleifend gravida, nulla nunc varius lectus, nec rutrum justo nibh eu lectus. Ut vulputate semper dui. Fusce erat odio, sollicitudin vel erat vel, interdum mattis neque.
-      </p>
-      <div className="flex justify-center space-x-4">
-        <Link href="/agiota/create">
-          <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-            Quero ser Agiota
-          </button>
-        </Link>
-        <Link href="/customer/create">
-          <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-            Quero ser Cliente
-          </button>
-        </Link>
+      <div className="container mx-auto mt-10 p-6 col-md-3">
+          <h1 className={style.title}>A.G.I.O.T.A</h1>
+          <p className="text-lg mb-6 mt-8 text-justify">
+              <b>A.G.I.O.T.A</b> é a plataforma que conecta você com soluções rápidas e acessíveis de empréstimos.
+              Precisa de dinheiro rápido? Nosso sistema permite que você solicite empréstimos de forma simples e segura,
+              com condições personalizadas para atender às suas necessidades. Faça sua conta conosco!
+          </p>
+          <div className="flex flex-col items-center space-y-2 mb-3">
+              <Link className={style.agiota__button} href="/agiota/create">
+                  <button>
+                      AGIOTA
+                  </button>
+              </Link>
+              <Link className={style.customer__button} href="/customer/create">
+                  <button>
+                      CLIENTE
+                  </button>
+              </Link>
+          </div>
+          <div className={style.link__login}>
+              <Link href="/">
+                  Já tenho uma conta!
+              </Link>
+          </div>
       </div>
-    </div>
   );
 };
 

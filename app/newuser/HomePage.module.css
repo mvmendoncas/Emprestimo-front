@@ -7,11 +7,63 @@
     background-color: #ffffff; /* Define a cor de fundo branca */
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); /* Adiciona uma leve sombra */
     border-radius: 8px; /* Adiciona bordas arredondadas */
-  }
-  
+}
 
-  .loginContainer {
+.loginContainer {
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+}
+
+.title {
+    color: black;
+    font-size: 36px;
+    text-align: center;
+    font-weight: 900;
+}
+
+.agiota__button{
+    color: white;
+    background-color: blue;
+    padding: 16px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.agiota__button:hover {
+    background-color: darkblue;
+}
+
+.customer__button{
+    color: white;
+    background-color: lightgreen;
+    padding: 16px 28px;
+    border: none;
+    border-radius: 6px;
+    font-size: 16px;
+    width: 100%;
+    cursor: pointer;
+    transition: background-color 0.4s;
+    margin-top: 1rem;
+    text-align: center;
+}
+
+.customer__button:hover {
+    background-color: mediumseagreen;
+}
+
+.link__login a {
+    color: darkgrey;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.link__login a:hover {
+    color: grey;
+}

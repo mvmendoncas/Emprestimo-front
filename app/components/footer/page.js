@@ -6,7 +6,7 @@ const Footer = () => {
 
     const pathName = usePathname();
 
-    if (pathName === "/" || pathName === "/newuser" || pathName === "/agiota/create") {
+    if (pathName === "/" || pathName === "/newuser" || pathName === "/agiota/create" || pathName === "/customer/create") {
         return null
     }
     return (

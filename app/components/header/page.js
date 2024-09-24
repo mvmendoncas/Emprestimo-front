@@ -6,7 +6,7 @@ import styles from "./Header.module.css";
 import { useSelector, useDispatch } from "react-redux";
 import { setStorageItem } from "../../utils/localStorage";
 import api from "../../api/http-common";
-import { useRouter } from "next/navigation";
+import {usePathname, useRouter} from "next/navigation";
 import { showLogin } from "../redux/ui/uiSlice";
 import { clearUserLogin } from "../redux/userLogin/userLoginSlice";
 
@@ -27,7 +27,14 @@ const Header = () => {
 
   const handleShowLogin = () => {
     dispatch(showLogin());
+    router.push('/')
   };
+
+  const pathName = usePathname();
+
+  if (pathName === "/") {
+    return null
+  }
 
   return (
     <header className="bg-blue-800 text-white p-4">
@@ -44,12 +51,11 @@ const Header = () => {
             Logout
           </button>
         ) : (
-          <button
-            onClick={handleShowLogin}
-            className="ml-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          >
-            Login
-          </button>
+            <Link href="/">
+              <button className="ml-auto bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
+                Login
+              </button>
+            </Link>
         )}
       </div>
     </header>

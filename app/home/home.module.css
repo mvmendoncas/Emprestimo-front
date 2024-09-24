@@ -1,0 +1,21 @@
+/* src/components/Menu.module.css */
+
+.navbar {
+    background-color: #333;
+    padding: 1rem;
+}
+
+.menuList {
+    list-style: none;
+    display: flex;
+    gap: 1rem;
+}
+
+.menuList li a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.menuList li a:hover {
+    text-decoration: underline;
+}

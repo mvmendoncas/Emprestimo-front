@@ -3,6 +3,7 @@
 import { createAgiota } from '@/app/lib/agiota/functions';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation'
+import { registerAgiota } from '@/app/api/agiota/rotas';
 
 
 const RegisterAgiota = () => {
@@ -11,6 +12,9 @@ const RegisterAgiota = () => {
   const [formData, setFormData] = useState({
     name: '',
     cpf: '',
+    username: '',
+    email: '',
+    password: '',
     phone: '',
     adress: {
       road: '',
@@ -46,7 +50,7 @@ const RegisterAgiota = () => {
   const handleSubmit = async (e) => {
       e.preventDefault();
 
-      createAgiota(formData)
+      registerAgiota(formData)
         .then(
           (result) => {
             console.log('Success:', result);
@@ -64,6 +68,9 @@ const RegisterAgiota = () => {
             <form onSubmit={handleSubmit}>
                 {[
                     { label: 'Nome', name: 'name', type: 'text', value: formData.name },
+                    { label: 'username', name: 'username', type: 'text', value: formData.username },
+                    { label: 'Email', name: 'email', type: 'text', value: formData.email },
+                    { label: 'password', name: 'password', type: 'text', value: formData.password },
                     { label: 'CPF', name: 'cpf', type: 'text', value: formData.cpf },
                     { label: 'Telefone', name: 'phone', type: 'text', value: formData.phone },
                     { label: 'Rua', name: 'adress.road', type: 'text', value: formData.adress.road },
@@ -105,4 +112,4 @@ const RegisterAgiota = () => {
     );
 };
 
-export default EditAgiota;
+export default RegisterAgiota;

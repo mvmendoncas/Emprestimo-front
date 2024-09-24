@@ -1,14 +1,15 @@
+// app/borrowing/create/page.js
 "use client";
 
+import React from 'react';
 import RegisterBorrowing from './create/page';
-import RegisterAgiota from './create/page';
+import ProtectedRoute from '../components/ProtectedRoute';
 
 const CadastrarAgiota = () => {
   return (
-    <div>
-      <h2 className="text-xl">Cadastro de Agiota</h2>
-      <RegisterBorrowing />
-    </div>
+      <div>
+        <RegisterBorrowing />
+      </div>
   );
 };
 

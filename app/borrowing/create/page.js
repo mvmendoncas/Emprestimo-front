@@ -1,8 +1,17 @@
 "use client";
 
-import { useState } from 'react';
+import { getCurrentUserId, registerBorrowing } from '@/app/api/borrowing/rotas';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { createBorrowing } from '@/app/lib/borrowing/functions';
+import { useEffect, useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useRouter } from 'next/navigation'
+
 
 const RegisterBorrowing = () => {
+  const [userId, setUserId] = useState(null);
+  const router = useRouter();
+
   const [formData, setFormData] = useState({
     fees: '',
     value: '',
@@ -12,65 +21,71 @@ const RegisterBorrowing = () => {
     frequency: '',
     status: '',
     discount: '',
-    customerId: '',
-    agiotaId: '',
   });
+
+  useEffect(() => {
+    // Função assíncrona para obter o userId
+    const fetchUserId = async () => {
+      try {
+        const id = await getCurrentUserId();
+        setUserId(id);
+        console.log("Chegou aqui", id);
+      } catch (error) {
+        console.error('Erro ao obter o ID do usuário:', error);
+      }
+    };
+  
+    fetchUserId();
+  }, []);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+    const [parent, child] = name.split('.');
+
+    if (child) {
+      setFormData((prevState) => ({
+        ...prevState,
+        [parent]: {
+          ...prevState[parent],
+          [child]: value,
+        },
+      }));
+    } else {
+      setFormData({ ...formData, [name]: value });
+    }
+    console.log(formData);
   };
 
   const handleSubmit = async (e) => {
-    e.preventDefault();
+      e.preventDefault();
 
-    const borrowingData = {
-      fees: parseFloat(formData.fees),
-      value: parseFloat(formData.value),
-      numberInstallments: parseInt(formData.numberInstallments),
-      payday: parseInt(formData.payday),
-      initialDate: new Date(formData.initialDate),
-      frequency: formData.frequency,
-      status: formData.status,
-      discount: parseFloat(formData.discount),
-      customer: { id: parseInt(formData.customerId) },
-      agiota: { id: parseInt(formData.agiotaId) },
-    };
-
-    try {
-      const response = await fetch('http://localhost:8080/borrowing', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(borrowingData),
-      });
-
-      if (response.ok) {
-        alert('Empréstimo cadastrado com sucesso!');
-        setFormData({
-          fees: '',
-          value: '',
-          numberInstallments: '',
-          payday: '',
-          initialDate: '',
-          frequency: '',
-          status: '',
-          discount: '',
-          customerId: '',
-          agiotaId: '',
-        });
-      } else {
-        const errorData = await response.json();
-        alert(`Erro ao cadastrar empréstimo: ${errorData.message || response.statusText}`);
+      if (!userId) {
+        alert('ID do usuário não disponível. Por favor, aguarde ou faça login novamente.');
+        return;
       }
-    } catch (error) {
-      console.error('Erro ao cadastrar empréstimo:', error);
-      alert('Erro ao cadastrar empréstimo. Por favor, tente novamente.');
-    }
-  };
-
+  
+      const borrowingData = {
+        ...formData,
+        agiotaId: userId, // Incluir o userId nos dados
+      };
+  
+        registerBorrowing(borrowingData)
+          .then(
+            (result) => {
+              console.log('Success:', result);
+              router.push('/agiota')
+            }
+          )
+          .catch (
+            (error) => {console.error('Error:', error); }
+          )
+      }
+      
+    
+  
   return (
+    <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
+
     <div className="container mt-5">
       <h2>Cadastrar Empréstimo</h2>
       <form onSubmit={handleSubmit}>
@@ -81,8 +96,6 @@ const RegisterBorrowing = () => {
           { label: 'Dia do Pagamento', name: 'payday', type: 'number' },
           { label: 'Data Inicial', name: 'initialDate', type: 'date' },
           { label: 'Desconto', name: 'discount', type: 'number' },
-          { label: 'ID do Cliente', name: 'customerId', type: 'number' },
-          { label: 'ID do Agiota', name: 'agiotaId', type: 'number' },
         ].map(({ label, name, type = 'text' }) => (
           <div className="mb-3" key={name}>
             <label className="form-label">{label}</label>
@@ -131,6 +144,8 @@ const RegisterBorrowing = () => {
         </button>
       </form>
     </div>
+    </ProtectedRoute>
+
   );
 };
 

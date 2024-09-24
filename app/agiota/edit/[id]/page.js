@@ -1,5 +1,5 @@
 "use client";
-
+ 
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from 'next/navigation'
@@ -14,6 +14,9 @@ const EditAgiota = () => {
     const [formData, setFormData] = useState({
         name: '',
         cpf: '',
+        username: '',
+        email: '',
+        password: '',
         phone: '',
         adress: {
           road: '',
@@ -72,6 +75,9 @@ const EditAgiota = () => {
                 <form onSubmit={handleSubmit}>
                     {[
                         { label: 'Nome', name: 'name', value: formData.name },
+                        { label: 'username', name: 'username',  value: formData.username },
+                        { label: 'Email', name: 'email', value: formData.email },
+                        { label: 'password', name: 'password', value: formData.password },
                         { label: 'CPF', name: 'cpf', value: formData.cpf },
                         { label: 'Telefone', name: 'phone', value: formData.phone },
                         { label: 'Rua', name: 'road', value: formData.adress.road },

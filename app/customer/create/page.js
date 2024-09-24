@@ -5,12 +5,16 @@ import { useState } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation'
 import { createCustomer } from '@/app/lib/customer/functions';
+import { registerCustomer } from '@/app/api/customer/rotas';
 
 const RegisterCustomer = () => {
   const router = useRouter();
 
   const [formData, setFormData] = useState({
     name: '',
+    username: '',
+    email: '',
+    password: '',
     cpf: '',
     phone: '',
     occupation: '',
@@ -47,8 +51,8 @@ const RegisterCustomer = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-
-    createCustomer(formData)
+    console.log('Dados do formulário:', formData);
+    registerCustomer(formData)
       .then(
         (result) => {
           console.log('Success:', result);
@@ -66,6 +70,9 @@ const RegisterCustomer = () => {
       <form onSubmit={handleSubmit}>
         {[
           { label: 'Nome', name: 'name' },
+          { label: 'username', name: 'username' },
+          { label: 'Email', name: 'email' },
+          { label: 'password', name: 'password' },
           { label: 'CPF', name: 'cpf' },
           { label: 'Telefone', name: 'phone' },
           { label: 'Rua', name: 'adress.road' },

@@ -1,26 +1,39 @@
-'use server'
+
 
 
 export async function createCustomer(formData) {
-    try {
-      const response = await fetch('http://localhost:8080/customer', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
-  
-      if (!response.ok) {
-        throw new Error(`Error: ${response.statusText}`);
+  try {
+    const response = await fetch('http://localhost:8081/customer/register', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        // Inclua o token de autenticação
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      },
+      body: JSON.stringify(formData),
+    });
+
+    if (!response.ok) {
+      // Tente obter a mensagem de erro do servidor
+      let errorMessage = `Error: ${response.statusText}`;
+      try {
+        const errorData = await response.json();
+        if (errorData.message) {
+          errorMessage = errorData.message;
+        }
+      } catch (e) {
+        // A resposta não é um JSON válido
+        console.error('Erro ao analisar a resposta do servidor:', e);
       }
-  
-      const result = await response.json();
-      return result;
-    } catch (error) {
-      console.error('Error:', error);
-      throw error;
+      throw new Error(errorMessage);
     }
+
+    const result = await response.json();
+    return result;
+  } catch (error) {
+    console.error('Error:', error);
+    throw error;
+  }
 }
 
 

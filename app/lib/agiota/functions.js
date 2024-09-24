@@ -2,7 +2,7 @@
 
 export async function createAgiota(formData) {
     try {
-      const response = await fetch('http://localhost:8080/agiota', {
+      const response = await fetch('http://localhost:8081/agiota/register', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

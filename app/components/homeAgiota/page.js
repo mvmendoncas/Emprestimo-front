@@ -1,8 +1,9 @@
+// app/components/AgiotaHome.js (supondo o caminho)
 "use client";
 
 import { useRouter } from 'next/navigation';
 
-const agiotaPage = () => {
+const AgiotaHome = () => { // Nome com letra maiúscula
   const router = useRouter();
 
   return (
@@ -34,4 +35,4 @@ const agiotaPage = () => {
   );
 };
 
-export default agiotaPage;
+export default AgiotaHome; // Exportação com o novo nome

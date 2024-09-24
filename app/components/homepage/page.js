@@ -1,6 +1,20 @@
+// app/components/homepage/page.js
+"use client"; // Necessário para usar hooks do React
 import Link from 'next/link';
-
+import { useSelector } from 'react-redux';
+import Login from '../Login/page'; // Ajustar o caminho conforme necessário
+import style from './HomePage.module.css'
 const HomePage = () => {
+  const showLogin = useSelector((state) => state.ui.showLogin);
+
+  if (showLogin) {
+    return (
+      <div className={style.loginContainer}>
+        <Login />
+      </div>
+    );
+  }
+
   return (
     <div className="container mx-auto mt-10 p-6 text-center ">
       <h1 className="text-4xl font-bold mb-4">Seja Bem-vindo!</h1>

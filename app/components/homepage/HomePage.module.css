@@ -9,11 +9,9 @@
     border-radius: 8px; /* Adiciona bordas arredondadas */
   }
   
-  h1 {
-    color: #333333; /* Cor do texto do título */
+
+  .loginContainer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
-  
-  p {
-    color: #666666; /* Cor do texto do parágrafo */
-  }
-  

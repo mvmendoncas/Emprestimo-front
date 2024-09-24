@@ -11,6 +11,7 @@ import { postLogin } from "../../api/auth/postLogin";
 import { setStorageItem } from "../../utils/localStorage";
 import style from "./login.module.css";
 import { hideLogin } from "../redux/ui/uiSlice";
+import HomePage from "@/app/components/homepage/page";
 
 const Login = () => {
   const [login, setLogin] = useState("");
@@ -110,6 +111,9 @@ const Login = () => {
             </button>
           </div>
         </div>
+
+
+        <HomePage />
       </div>
     </BackgroundDropdownCenter>
   );

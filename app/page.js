@@ -1,13 +1,13 @@
 // pages/index.js
 
-import HomePage from "./components/homepage/page";
+import Login from "@/app/components/Login/page";
 
 
 const Home = () => {
   return (
     <div className="flex flex-col min-h-screen">
     
-      <HomePage/>
+      <Login/>
    
     </div>
   );

@@ -32,7 +32,7 @@ const Header = () => {
 
   const pathName = usePathname();
 
-  if (pathName === "/") {
+  if (pathName === "/" || pathName === "/newuser" || pathName === "/agiota/create" || pathName === "/customer/create") {
     return null
   }
 

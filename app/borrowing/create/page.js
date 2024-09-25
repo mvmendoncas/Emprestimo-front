@@ -18,7 +18,6 @@ const RegisterBorrowing = () => {
     payday: '',
     initialDate: '',
     frequency: '',
-    status: '',
     discount: '',
   });
 
@@ -111,21 +110,6 @@ const RegisterBorrowing = () => {
             <option value="WEEKLY">Semanal</option>
             <option value="MONTHLY">Mensal</option>
             <option value="YEARLY">Anual</option>
-          </select>
-        </div>
-        <div className="mb-3">
-          <label className="form-label">Status</label>
-          <select
-            className="form-control"
-            name="status"
-            value={formData.status}
-            onChange={handleChange}
-            required
-          >
-            <option value="">Selecione o status</option>
-            <option value="PENDING">Pendente</option>
-            <option value="PAID">Pago</option>
-            <option value="CANCELED">Cancelado</option>
           </select>
         </div>
         <button type="submit" className="btn btn-primary">

@@ -1,21 +1,20 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { listBorrowing } from '@/app/api/borrowing/rotas';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { acceptedRequest, listAgiotaBorrowings } from '@/app/api/agiota/rotas';
 
-const ListBorrowings = () => {
+const ListBorrowingsRequested = () => {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    // Função para buscar a lista de empréstimos
     const fetchBorrowings = async () => {
       try {
-        const response = await listBorrowing();
-        console.log(response)
+        const response = await listAgiotaBorrowings();
+        console.log(response);
         setBorrowings(response.data);
       } catch (error) {
         console.error('Erro ao obter a lista de empréstimos:', error);
@@ -27,18 +26,34 @@ const ListBorrowings = () => {
     fetchBorrowings();
   }, []);
 
-  const handleRequestBorrowing = (borrowingId) => {
-    router.push(`/borrowing/${borrowingId}/request`);
+  
+  const filteredBorrowings = borrowings.filter(borrowing => borrowing.status === "SOLICITADO");
+
+  // Função que lida com a aceitação do empréstimo
+  const handleAccept = async (id) => {
+    const confirmed = window.confirm('Você tem certeza que deseja aceitar a solicitação deste empréstimo?');
+
+    if (confirmed) {
+      try {
+        const response = await acceptedRequest(id);
+        console.log(`Empréstimo ${id} aceito com sucesso:`, response.data);
+        
+        alert(`Empréstimo ${id} foi aceito com sucesso!`);
+        
+        setBorrowings(borrowings.filter(borrowing => borrowing.id !== id));
+      } catch (error) {
+        console.error('Erro ao aceitar o empréstimo:', error);
+        alert('Ocorreu um erro ao aceitar a solicitação do empréstimo.');
+      }
+    }
   };
-
-
   return (
-    <ProtectedRoute requiredRoles={["administrador", "agiota", "customer"]}>
+    <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
         <h2>Lista de Empréstimos</h2>
         {loading ? (
           <p>Carregando...</p>
-        ) : borrowings.length === 0 ? (
+        ) : filteredBorrowings.length === 0 ? (
           <p>Nenhum empréstimo encontrado.</p>
         ) : (
           <table className="table">
@@ -52,10 +67,11 @@ const ListBorrowings = () => {
                 <th>Frequência</th>
                 <th>Status</th>
                 <th>Desconto</th>
+                <th>Ações</th> {/* Nova coluna para o botão de ações */}
               </tr>
             </thead>
             <tbody>
-              {borrowings.map((borrowing) => (
+              {filteredBorrowings.map((borrowing) => (
                 <tr key={borrowing.id}>
                   <td>{borrowing.id}</td>
                   <td>{borrowing.value}</td>
@@ -65,12 +81,12 @@ const ListBorrowings = () => {
                   <td>{borrowing.frequency}</td>
                   <td>{borrowing.status}</td>
                   <td>{borrowing.discount}</td>
-                  <button
-                      className="btn btn-primary"
-                      onClick={() => handleRequestBorrowing(borrowing.id)}
-                    >
-                      Solicitar esse Empréstimo
+                  <td>
+                    {/* Botão de aceitar */}
+                    <button className="btn btn-success" onClick={() => handleAccept(borrowing.id)}>
+                      Aceitar
                     </button>
+                  </td>
                 </tr>
               ))}
             </tbody>
@@ -81,4 +97,4 @@ const ListBorrowings = () => {
   );
 };
 
-export default ListBorrowings;
+export default ListBorrowingsRequested;

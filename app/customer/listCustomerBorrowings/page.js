@@ -1,21 +1,20 @@
 "use client";
 
 import { useState, useEffect } from 'react';
-import { listBorrowing } from '@/app/api/borrowing/rotas';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
-import { useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation';
+import { listCustomerBorrowings } from '@/app/api/customer/rotas';
 
-const ListBorrowings = () => {
+const ListCustomerBorrowings = () => {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    // Função para buscar a lista de empréstimos
     const fetchBorrowings = async () => {
       try {
-        const response = await listBorrowing();
-        console.log(response)
+        const response = await listCustomerBorrowings();
+        console.log(response);
         setBorrowings(response.data);
       } catch (error) {
         console.error('Erro ao obter a lista de empréstimos:', error);
@@ -27,18 +26,13 @@ const ListBorrowings = () => {
     fetchBorrowings();
   }, []);
 
-  const handleRequestBorrowing = (borrowingId) => {
-    router.push(`/borrowing/${borrowingId}/request`);
-  };
-
-
   return (
-    <ProtectedRoute requiredRoles={["administrador", "agiota", "customer"]}>
+    <ProtectedRoute requiredRoles={["administrador", "customer"]}>
       <div className="container mt-5">
         <h2>Lista de Empréstimos</h2>
         {loading ? (
           <p>Carregando...</p>
-        ) : borrowings.length === 0 ? (
+        ) : borrowings.length === 0 ? (  
           <p>Nenhum empréstimo encontrado.</p>
         ) : (
           <table className="table">
@@ -65,12 +59,6 @@ const ListBorrowings = () => {
                   <td>{borrowing.frequency}</td>
                   <td>{borrowing.status}</td>
                   <td>{borrowing.discount}</td>
-                  <button
-                      className="btn btn-primary"
-                      onClick={() => handleRequestBorrowing(borrowing.id)}
-                    >
-                      Solicitar esse Empréstimo
-                    </button>
                 </tr>
               ))}
             </tbody>
@@ -81,4 +69,4 @@ const ListBorrowings = () => {
   );
 };
 
-export default ListBorrowings;
+export default ListCustomerBorrowings;

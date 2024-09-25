@@ -11,3 +11,19 @@ export async function listAgiotaBorrowings() {
 export async function acceptedRequest(id) {
     return await api.post(`borrowing/${id}/accept`)
 }
+
+export async function currentUserAgiota() {
+    return await api.get("agiota/current")
+}
+
+export async function editAgiota(id, data) {
+    return await api.patch(`agiota/${id}`, data); 
+}
+
+export async function searchAgiota(id) {
+    return await api.get(`agiota/${id}`)
+}
+
+export async function deleteAgiota(id) {
+    return await api.delete(`agiota/${id}`)
+}

@@ -4,7 +4,6 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { format } from 'date-fns';
 import { useRouter } from 'next/navigation'
-import { createCustomer } from '@/app/lib/customer/functions';
 import { registerCustomer } from '@/app/api/customer/rotas';
 import style from './CreateCustomer.module.css'
 

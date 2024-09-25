@@ -20,3 +20,11 @@ export async function findBorrowing(id) {
 export async function requestBorrowing(id) {
     return await api.post(`borrowing/${id}/request`)
 }
+
+export async function viewInstallments(id) {
+    return await api.get(`borrowing/${id}/installments`)
+}
+
+export async function payInstallment(id, value) {
+    return await api.post(`borrowing/${id}/installments/${value}/pay`)
+}

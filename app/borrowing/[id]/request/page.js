@@ -1,7 +1,7 @@
 "use client";
 
 import { findBorrowing, requestBorrowing } from '@/app/api/borrowing/rotas';
-import { currentUser } from '@/app/api/customer/rotas';
+import { currentUserCustomer } from '@/app/api/customer/rotas';
 import { useParams, useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
@@ -47,7 +47,7 @@ const Request = () => {
   useEffect(() => {
     const fetchUserId = async () => {
       try {
-        const id = await currentUser();
+        const id = await currentUserCustomer();
         setUserId(id.data.id);
         console.log("Chegou aqui", id);
       } catch (error) {

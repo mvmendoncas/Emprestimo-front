@@ -107,7 +107,7 @@ const RegisterCustomer = () => {
               </div>
           ))}
           <div className="mt-3">
-            <button type="submit" className={style.save__button}>ENTRAR</button>
+            <button type="submit" className={style.save__button}>CRIAR CONTA</button>
           </div>
         </form>
       </div>

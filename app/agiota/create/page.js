@@ -85,12 +85,9 @@ const RegisterAgiota = () => {
                       {label: 'CPF:', name: 'cpf', type: 'text', value: formData.cpf},
                       {label: 'Telefone:', name: 'phone', type: 'text', value: formData.phone},
                       {label: 'Rua:', name: 'adress.road', type: 'text', value: formData.adress.road},
-                      {
-                          label: 'Bairro:',
-                          name: 'adress.neighborhood',
-                          type: 'text',
-                          value: formData.adress.neighborhood
-                      },
+                      { label: 'Bairro', name: 'adress.place', type: 'text', value: formData.adress.place },
+                      { label: 'Número', name: 'adress.number', type: 'text', value: formData.adress.number },
+                      { label: 'Complemento', name: 'adress.neighborhood', type: 'text', value: formData.adress.neighborhood },
                       {label: 'Cidade:', name: 'adress.city', type: 'text', value: formData.adress.city},
                       {label: 'Estado:', name: 'adress.state', type: 'text', value: formData.adress.state},
                       {label: 'CEP:', name: 'adress.cep', type: 'text', value: formData.adress.cep},
@@ -122,7 +119,7 @@ const RegisterAgiota = () => {
                       </select>
                   </div>
                   <div className='mt-3'>
-                      <button type="submit" className={style.save__button}>ENTRAR</button>
+                      <button type="submit" className={style.save__button}>CRIAR CONTA</button>
                   </div>
               </form>
           </div>

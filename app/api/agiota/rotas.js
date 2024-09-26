@@ -29,5 +29,5 @@ export async function deleteAgiota(id) {
 }
 
 export async function denyRequest(id) {
-    return await api.post(`borrowing/${id}/deny`)
+    return await api.post(`borrowing/${id}/denied`)
 }

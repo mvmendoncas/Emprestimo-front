@@ -41,7 +41,9 @@ const Configurations = () => {
 
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
-      <EditAgiota/>
+      <div className="mb-5">
+        <EditAgiota/>
+      </div>
     </ProtectedRoute>
   );
 };

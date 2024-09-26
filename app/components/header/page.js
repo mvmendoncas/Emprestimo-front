@@ -52,7 +52,7 @@ const Header = () => {
   const configurationPath = isCustomer ? '/customer/configurations' : (isAgiota ? '/agiota/configurations' : null);
 
   return (
-    <header className="bg-black text-white px-4 py-2">
+    <header className="bg-dark text-white px-4 py-2">
       <div className={styles.Header}>
         {/* O link "Agiota" agora redireciona conforme a role */}
         <h1 

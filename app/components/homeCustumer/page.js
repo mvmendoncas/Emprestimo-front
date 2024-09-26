@@ -2,14 +2,15 @@
 
 import ListCustomerBorrowings from '@/app/customer/listCustomerBorrowings/page';
 import { useRouter } from 'next/navigation';
+import style from "./HomeCustomer.module.css";
 
 
 const HomeCustumer = () => {
   const router = useRouter();
 
   return (
-    <div className="container mx-auto mt-10 p-6 text-center ">
-      <div className="flex justify-center space-x-4">
+    <div className={style.container}>
+      <div className="flex justify-center">
 
         <ListCustomerBorrowings/>
       </div>

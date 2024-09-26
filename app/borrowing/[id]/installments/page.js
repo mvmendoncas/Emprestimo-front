@@ -118,7 +118,7 @@ const Installments = () => {
                 <th>Data de Pagamento</th>
                 <th>Status</th>
                 <th>Valor</th>
-                <th>Ações</th> {/* Coluna para o botão */}
+                <th>Ações</th>
               </tr>
             </thead>
             <tbody>

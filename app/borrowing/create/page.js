@@ -18,12 +18,11 @@ const RegisterBorrowing = () => {
   });
 
   useEffect(() => {
-    // Função assíncrona para obter o userId
+   
     const fetchUserId = async () => {
       try {
         const id = await getCurrentUserId();
         setUserId(id);
-        console.log("Chegou aqui", id);
       } catch (error) {
         console.error('Erro ao obter o ID do usuário:', error);
       }

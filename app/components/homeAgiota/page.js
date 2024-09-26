@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { listAgiotaBorrowings } from '@/app/api/agiota/rotas'; // Importe a função para listar empréstimos
+import ListAgiotaBorrowings from '@/app/agiota/listAgiotaBorrowings/page';
 
 const AgiotaHome = () => {
   const router = useRouter();
@@ -50,33 +51,7 @@ const AgiotaHome = () => {
       )}
 
       <div className="flex justify-center space-x-4">
-        <button
-          className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push('/borrowing/create')}
-        >
-          Criar Empréstimo
-        </button>
-
-        <button
-          className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push('/agiota/customers')}
-        >
-          Meus Clientes
-        </button>
-
-        <button
-          className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push('/agiota/requests')}
-        >
-          Solicitações
-        </button>
-
-        <button
-          className="bg-green-500 hover:bg-black-700 text-white font-bold py-2 px-4 rounded"
-          onClick={() => router.push('/agiota/listAgiotaBorrowings')}
-        >
-          Meus Empréstimos
-        </button>
+        <ListAgiotaBorrowings/>
       </div>
     </div>
   );

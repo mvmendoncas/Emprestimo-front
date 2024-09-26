@@ -1,15 +1,17 @@
 "use client";
 
+import { useState, useEffect } from 'react';
+import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { useParams, useRouter } from 'next/navigation';
 import { findBorrowing, requestBorrowing } from '@/app/api/borrowing/rotas';
 import { currentUserCustomer } from '@/app/api/customer/rotas';
-import { useParams, useRouter } from 'next/navigation';
-import { useEffect, useState } from 'react';
-import ProtectedRoute from '@/app/components/ProtectedRoute';
+import { reviewAgiota } from '@/app/api/agiota/rotas';
 
 const Request = () => {
   const router = useRouter();
   const params = useParams();
-  const [userId, setUserId] =  useState(null);
+  const [userId, setUserId] = useState(null);
+  const [averageReview, setAverageReview] = useState(null); 
 
   const [formData, setFormData] = useState({
     value: '',
@@ -35,7 +37,6 @@ const Request = () => {
     const loadForm = async () => {
       try {
         const data = await findBorrowing(params.id);
-        console.log("FUNCIONA CARALHO", data)
 
         setFormData({
           value: data.data.value,
@@ -47,7 +48,6 @@ const Request = () => {
           discount: data.data.discount,
         });
         
-      
         setAgiota({
           name: data.data.agiota.name,
           username: data.data.agiota.username,
@@ -57,15 +57,18 @@ const Request = () => {
           fees: data.data.agiota.fees,
           billingMethod: data.data.agiota.billingMethod
         });
+        
+        // Chama a função para obter a média de avaliações do agiota
+        const reviewData = await reviewAgiota(data.data.agiota.id);
+        setAverageReview(reviewData.data.nota); 
       } catch (error) {
-        console.error('Erro ao buscar empréstimo:', error);
+        console.error('Erro ao buscar empréstimo ou avaliação:', error);
       }
     };
 
     loadForm();
   }, [params.id]);
 
- 
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -85,7 +88,6 @@ const Request = () => {
       try {
         const response = await requestBorrowing(params.id);
         console.log("Solicitação de empréstimo confirmada:", response.data);
-
         alert('Solicitação de empréstimo confirmada com sucesso!');
       } catch (error) {
         console.error('Erro ao solicitar empréstimo:', error);
@@ -120,6 +122,12 @@ const Request = () => {
             <p><strong>Telefone:</strong> {agiota.phone}</p>
             <p><strong>Taxas:</strong> {agiota.fees}</p>
             <p><strong>Método de Cobrança:</strong> {agiota.billingMethod}</p>
+            
+            {averageReview === 0 ? (
+              <p><strong>Avaliações:</strong> Sem avaliações</p>
+            ) : (
+              <p><strong>Avaliações:</strong> {averageReview} </p>
+            )}
           </div>
         </div>
         

@@ -33,5 +33,5 @@ export async function denyRequest(id) {
 }
 
 export async function reviewAgiota(id) {
-    return await api.get(`review-agiota/${id}`)
+    return await api.get(`borrowing/review-agiota/${id}`)
 }

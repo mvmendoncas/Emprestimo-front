@@ -5,10 +5,12 @@ import { useParams, useRouter } from 'next/navigation';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { acceptedRequest, denyRequest } from '@/app/api/agiota/rotas';
 import { findBorrowing } from '@/app/api/borrowing/rotas';
+import { reviewCustomer } from '@/app/api/customer/rotas';
 
 const RequestedBorrowing = () => {
   const [borrowing, setBorrowing] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [averageReview, setAverageReview] = useState(null); // Estado para armazenar a média de avaliações do cliente
   const router = useRouter();
   const params = useParams();
 
@@ -17,6 +19,10 @@ const RequestedBorrowing = () => {
       try {
         const response = await findBorrowing(params.id);
         setBorrowing(response.data);
+
+        // Obter a média de avaliações do cliente
+        const reviewData = await reviewCustomer(response.data.customer.id);
+        setAverageReview(reviewData.data.nota); // Armazena a média de avaliações do cliente
       } catch (error) {
         console.error('Erro ao obter os detalhes do empréstimo:', error);
       } finally {
@@ -92,6 +98,12 @@ const RequestedBorrowing = () => {
             <p><strong>Ocupação:</strong> {borrowing.customer.occupation}</p>
             <p><strong>Local de Trabalho:</strong> {borrowing.customer.workplace}</p>
             <p><strong>Telefone do Trabalho:</strong> {borrowing.customer.workPhone}</p>
+            {/* Exibe a média de avaliações do cliente */}
+            {averageReview === 0 ? (
+              <p><strong>Avaliações:</strong> Sem avaliações</p>
+            ) : (
+              <p><strong>Avaliações:</strong> {averageReview} </p>
+            )}
           </div>
         </div>
 

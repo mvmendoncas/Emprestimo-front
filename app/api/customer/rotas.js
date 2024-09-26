@@ -25,5 +25,5 @@ export async function deleteCustomer(id) {
 }
 
 export async function reviewCustomer(id) {
-    return await api.get(`review-customer/${id}`)
+    return await api.get(`borrowing/review-customer/${id}`)
 }

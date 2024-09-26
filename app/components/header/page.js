@@ -14,7 +14,7 @@ const Header = () => {
     isAuthenticated: state.userLogin.isAuthenticated,
     roles: state.userLogin.roles,
   }));
-  
+
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -28,7 +28,7 @@ const Header = () => {
 
   const handleShowLogin = () => {
     dispatch(showLogin());
-    router.push('/')
+    router.push('/');
   };
 
   const pathName = usePathname();
@@ -40,14 +40,27 @@ const Header = () => {
   const isCustomer = roles.includes("customer");
   const isAgiota = roles.includes("agiota");
 
+  // Função para redirecionar com base na role
+  const handleAgiotaClick = () => {
+    if (isAgiota) {
+      router.push('/agiota');
+    } else if (isCustomer) {
+      router.push('/customer');
+    }
+  };
+
   const configurationPath = isCustomer ? '/customer/configurations' : (isAgiota ? '/agiota/configurations' : null);
 
   return (
     <header className="bg-black text-white px-4 py-2">
       <div className={styles.Header}>
-        <Link href="/" className={styles.home__link}>
-          <h1 className={styles.text__home__link}>Agiota</h1>
-        </Link>
+        {/* O link "Agiota" agora redireciona conforme a role */}
+        <h1 
+          className="text-2xl cursor-pointer" 
+          onClick={handleAgiotaClick}
+        >
+          Agiota
+        </h1>
 
         {configurationPath && (
           <Link href={configurationPath} className={styles.configuration__button}>

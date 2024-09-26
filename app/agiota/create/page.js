@@ -116,7 +116,9 @@ const RegisterAgiota = () => {
                       >
                           <option value="0">Selecione uma opção</option>
                           <option value="weekly">Semanalmente</option>
+                          <option value="biweekly">Quinzenalmente</option>
                           <option value="monthly">Mensalmente</option>
+                          <option value="quarterly">Trimestralmente</option>
                       </select>
                   </div>
                   <div className='mt-3'>

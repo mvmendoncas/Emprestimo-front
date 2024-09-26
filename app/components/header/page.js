@@ -76,7 +76,7 @@ const Header = () => {
             {/* Botão Criar Empréstimo */}
             <div className="flex justify-center space-x-4">
               <button
-                className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+                  className={styles.configuration__button}
                 onClick={() => router.push('/borrowing/create')}
               >
                 Criar Empréstimo
@@ -85,7 +85,7 @@ const Header = () => {
 
             {/* Botão Solicitações */}
             <button
-              className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded"
+                className={styles.configuration__button}
               onClick={() => router.push('/agiota/requests')}
             >
               Solicitações

@@ -34,19 +34,18 @@ const AgiotaHome = () => {
 
   return (
     <div className="container mx-auto mt-10 p-6 text-center">
-      <h1 className="text-4xl font-bold mb-4">Página do Agiota!</h1>
 
       {/* Mensagem se houver novas solicitações de empréstimo */}
       {hasNewRequests && (
-        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-4">
-          <p className="font-bold">Você possui novas solicitações de empréstimo!</p>
+        <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-2">
+          <p className="font-bold m-0">Você possui novas solicitações de empréstimo!</p>
         </div>
       )}
 
       {/* Mensagem se houver empréstimos concluídos */}
       {hasCompletedBorrowings && (
-        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-4">
-          <p className="font-bold">Você tem um empréstimo concluído! Por favor, avalie o cliente.</p>
+        <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-2">
+          <p className="font-bold m-0">Você tem um empréstimo concluído! Por favor, avalie o cliente.</p>
         </div>
       )}
 

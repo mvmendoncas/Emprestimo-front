@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { acceptedRequest, listAgiotaBorrowings, denyRequest } from '@/app/api/agiota/rotas';
+import Link from "next/link";
 
 const ListBorrowingsRequested = () => {
   const [borrowings, setBorrowings] = useState([]);
@@ -62,54 +63,49 @@ const ListBorrowingsRequested = () => {
     }
   };
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+  };
+
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
-        <h2>Lista de Empréstimos</h2>
         {loading ? (
           <p>Carregando...</p>
         ) : filteredBorrowings.length === 0 ? (
-          <p>Nenhum empréstimo encontrado.</p>
+            <div className="text-center">
+              <h2>Solicitações</h2>
+              <h5 className="mt-3">Aqui é onde voce pode acompanhar as suas solicitações de empréstimos! Nenhum cliente fez uma solicitação para seu perfil ainda.</h5>
+            </div>
         ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Valor</th>
-                <th>Número de Parcelas</th>
-                <th>Dia do Pagamento</th>
-                <th>Data Inicial</th>
-                <th>Frequência</th>
-                <th>Status</th>
-                <th>Desconto</th>
-                <th>Ações</th> {/* Nova coluna para os botões de ações */}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredBorrowings.map((borrowing) => (
-                <tr key={borrowing.id}>
-                  <td>{borrowing.id}</td>
-                  <td>{borrowing.value}</td>
-                  <td>{borrowing.numberInstallments}</td>
-                  <td>{borrowing.payday}</td>
-                  <td>{borrowing.initialDate}</td>
-                  <td>{borrowing.frequency}</td>
-                  <td>{borrowing.status}</td>
-                  <td>{borrowing.discount}</td>
-                  <td>
-                    {/* Botão de aceitar */}
-                    <button className="btn btn-success" onClick={() => handleAccept(borrowing.id)}>
-                      Aceitar
-                    </button>
-                    {/* Botão de recusar */}
-                    <button className="btn btn-danger ml-2" onClick={() => handleDeny(borrowing.id)}>
-                      Recusar
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+
+            <div>
+              <div className="text-center text-2xl font-semibold mb-6">Acompanhe suas solicitações!</div>
+              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {filteredBorrowings.map((borrowing) => (
+                    <div key={borrowing.id}
+                         className="bg-white shadow-md rounded-lg p-6">
+                      <h2 className="text-xl font-bold mb-2">Empréstimo ID: {borrowing.id}</h2>
+                      <p className="mb-1"><strong>Valor:</strong> R${borrowing.value}</p>
+                      <p className="mb-1"><strong>Parcelas:</strong> {borrowing.numberInstallments}</p>
+                      <p className="mb-1"><strong>Dia do Pagamento:</strong> {borrowing.payday}</p>
+                      <p className="mb-1"><strong>Data Inicial:</strong> {formatDate(borrowing.initialDate)}</p>
+                      <p className="mb-1"><strong>Frequência:</strong> {borrowing.frequency}</p>
+                      <p className="mb-1"><strong>Status:</strong> {borrowing.status}</p>
+                      <p className="mb-1"><strong>Desconto:</strong> R${borrowing.discount}</p>
+                      <button className="btn btn-success" onClick={() => handleAccept(borrowing.id)}>
+                        Aceitar
+                      </button>
+                      {/* Botão de recusar */}
+                      <button className="btn btn-danger ml-2" onClick={() => handleDeny(borrowing.id)}>
+                        Recusar
+                      </button>
+                    </div>
+                ))}
+              </div>
+            </div>
         )}
       </div>
     </ProtectedRoute>

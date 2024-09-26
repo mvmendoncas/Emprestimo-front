@@ -53,61 +53,77 @@ const ListAgiotaBorrowings = () => {
 
   const filteredBorrowings = borrowings.filter(borrowing => borrowing.status !== "SOLICITADO");
 
+  const formatDate = (dateString) => {
+    if (!dateString) return '';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+  };
+
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
-      <div className="container mt-5">
-        <h2>Lista de Empréstimos</h2>
+      <div className="container mt-5 mx-0">
         {loading ? (
           <p>Carregando...</p>
         ) : filteredBorrowings.length === 0 ? (
-          <p>Nenhum empréstimo encontrado.</p>
+            <div>
+              <h1><b>A.G.I.O.T.A</b></h1>
+              <h5 className="mt-3">Aqui você pode gerenciar suas operações de crédito de forma simples e organizada. Nosso sistema permite que você ofereça empréstimos a clientes, estabelecendo condições personalizadas como valor, número de parcelas, taxas de juros e datas de pagamento.
+
+                Ao cadastrar seus empréstimos, você poderá acompanhar o status de cada operação, desde a solicitação até o pagamento completo. Além disso, é possível avaliar o perfil de cada cliente e ajustar suas ofertas de acordo com suas necessidades e histórico.
+
+                Comece cadastrando seu primeiro empréstimo e aproveite as funcionalidades que vão facilitar sua gestão financeira!</h5>
+            </div>
         ) : (
-          <table className="table">
-            <thead>
-              <tr>
-                <th>ID</th>
-                <th>Valor</th>
-                <th>Número de Parcelas</th>
-                <th>Dia do Pagamento</th>
-                <th>Data Inicial</th>
-                <th>Frequência</th>
-                <th>Status</th>
-                <th>Desconto</th>
-                <th>Ações</th> {/* Adicionando uma coluna para ações */}
-              </tr>
-            </thead>
-            <tbody>
-              {filteredBorrowings.map((borrowing) => (
-                <tr key={borrowing.id}>
-                  <td>{borrowing.id}</td>
-                  <td>{borrowing.value}</td>
-                  <td>{borrowing.numberInstallments}</td>
-                  <td>{borrowing.payday}</td>
-                  <td>{borrowing.initialDate}</td>
-                  <td>{borrowing.frequency}</td>
-                  <td>{borrowing.status}</td>
-                  <td>{borrowing.discount}</td>
-                  <td>
-                    {/* Botão de avaliar cliente, aparece apenas se o status for CONCLUÍDO */}
-                    {borrowing.status === "CONCLUIDO" && (
-                      borrowing.customerEvaluated ? (
-                        <button className="btn btn-secondary" disabled>
-                          Cliente Avaliado
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => handleEvaluate(borrowing.id)}
-                        >
-                          Avaliar Cliente
-                        </button>
-                      )
-                    )}
-                  </td>
+            <div>
+              <div className="text-center text-2xl font-semibold mb-6">Acompanhe seus empréstimos!</div>
+              <table className="table">
+                <thead>
+                <tr>
+                  <th>ID</th>
+                  <th>Valor</th>
+                  <th>Número de Parcelas</th>
+                  <th>Dia do Pagamento</th>
+                  <th>Data Inicial</th>
+                  <th>Frequência</th>
+                  <th>Status</th>
+                  <th>Desconto</th>
+                  <th>Ações</th>
+                  {/* Adicionando uma coluna para ações */}
                 </tr>
-              ))}
-            </tbody>
-          </table>
+                </thead>
+                <tbody>
+                {filteredBorrowings.map((borrowing) => (
+                    <tr key={borrowing.id}>
+                      <td>{borrowing.id}</td>
+                      <td>{borrowing.value}</td>
+                      <td>{borrowing.numberInstallments}</td>
+                      <td>{borrowing.payday}</td>
+                      <td>{formatDate(borrowing.initialDate)}</td>
+                      <td>{borrowing.frequency}</td>
+                      <td>{borrowing.status}</td>
+                      <td>{borrowing.discount}</td>
+                      <td>
+                        {/* Botão de avaliar cliente, aparece apenas se o status for CONCLUÍDO */}
+                        {borrowing.status === "CONCLUIDO" && (
+                            borrowing.customerEvaluated ? (
+                                <button className="btn btn-secondary" disabled>
+                                  Cliente Avaliado
+                                </button>
+                            ) : (
+                                <button
+                                    className="btn btn-primary"
+                                    onClick={() => handleEvaluate(borrowing.id)}
+                                >
+                                  Avaliar Cliente
+                                </button>
+                            )
+                        )}
+                      </td>
+                    </tr>
+                ))}
+                </tbody>
+              </table>
+            </div>
         )}
       </div>
     </ProtectedRoute>

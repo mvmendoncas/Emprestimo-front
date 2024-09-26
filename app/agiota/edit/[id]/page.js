@@ -3,14 +3,13 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from 'next/navigation'
-import { editAgiota, loadAgiota } from "@/app/lib/agiota/functions";
-import { searchAgiota } from "@/app/api/agiota/rotas";
+import { currentUserAgiota, searchAgiota, editAgiota } from "@/app/api/agiota/rotas";
 import ProtectedRoute from "@/app/components/ProtectedRoute";
 
 const EditAgiota = () => {
     const router = useRouter();
     const params = useParams();
-
+    const [userId, setUserId] = useState(null);
     const [agiotaData, setAgiotaData] = useState(null);
 
     const [formData, setFormData] = useState({
@@ -30,6 +29,20 @@ const EditAgiota = () => {
         fees: '',
         billingMethod: '',
       });
+
+    useEffect(() => {
+        const fetchUserId = async () => {
+          try {
+            const id = await currentUserAgiota();
+            setUserId(id.data.id);
+            console.log("Chegou aqui", id);
+          } catch (error) {
+            console.error('Erro ao obter o ID do usuário:', error);
+          }
+        };
+    
+        fetchUserId();
+      }, []);
 
     useEffect(() => {
         const loadForm = async () => {
@@ -80,6 +93,8 @@ const EditAgiota = () => {
           setFormData({ ...formData, [name]: value });
         }
       };
+
+      console.log("AQUIIII",userId)
 
       const handleSubmit = async (e) => {
         e.preventDefault();

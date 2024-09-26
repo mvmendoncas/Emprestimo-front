@@ -1,5 +1,29 @@
 .Header{
     display: flex; 
-    align-items: row; 
+    align-items: center ;
     justify-content: space-between;
+}
+
+.home__link {
+    color: white; /* Deixa o texto branco */
+    text-decoration: none; /* Remove o sublinhado padrão */
+    font-size: 1.5rem; /* Opcional: ajusta o tamanho da fonte */
+}
+
+.text__home__link{
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.configuration__button {
+    display: flex; /* Habilita o Flexbox */
+    justify-content: center; /* Centraliza o conteúdo horizontalmente */
+    align-items: center; /* Centraliza o conteúdo verticalmente */
+    height: 100%; /* Garante que o botão tenha uma altura definida */
+    text-decoration: none; /* Remove sublinhado de links */
+    margin-left: 2rem;
+}
+
+.configuration__button:hover {
+    border-bottom: 1px solid white;
 }

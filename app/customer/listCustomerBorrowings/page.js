@@ -33,12 +33,11 @@ const ListCustomerBorrowings = () => {
           <p>Carregando...</p>
         ) : borrowings.length === 0 ? (
             <div>
-              <h2>Lista de Empréstimos</h2>
-              <p>Aqui você pode solicitar empréstimos de maneira rápida e prática. Se precisa de um apoio financeiro,
+              <h1><b>A.G.I.O.T.A</b></h1>
+              <h5 className="mt-3">Aqui você pode solicitar empréstimos de maneira rápida e prática! Se precisa de um apoio financeiro,
                 estamos prontos para ajudar. Com condições flexíveis e ajustadas às suas necessidades, você poderá
                 solicitar um empréstimo diretamente com o agiota e acompanhar todo o processo de forma segura e
-                transparente. Comece agora clicando em "Solicitar Empréstimo" e tenha o crédito que você precisa ao seu
-                alcance.</p>
+                transparente. Solicite seu primeiro empréstimo!</h5>
 
             </div>
         ) : (

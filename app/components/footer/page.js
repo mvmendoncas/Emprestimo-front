@@ -10,8 +10,8 @@ const Footer = () => {
         return null
     }
     return (
-      <footer className="bg-blue-800 text-white p-4 mt-auto">
-        <p>© 2024 Agiota. All rights reserved.</p>
+      <footer className="bg-black text-white py-2 mt-auto">
+        <p className="p-0 m-0">© 2024 Agiota. All rights reserved.</p>
       </footer>
     );
   };

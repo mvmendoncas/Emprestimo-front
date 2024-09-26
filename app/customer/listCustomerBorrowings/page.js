@@ -32,6 +32,7 @@ const ListCustomerBorrowings = () => {
     if (!dateString) return '';
     const date = new Date(dateString);
     return date.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+  };  // Formato dd/mm/yyyy
 
   // Função para avaliar o agiota
   const handleEvaluate = async (id) => {
@@ -72,7 +73,6 @@ const ListCustomerBorrowings = () => {
                 transparente. Solicite seu primeiro empréstimo!</h5>
             </div>
         ) : (
-
             <div>
               <div className="text-center text-2xl font-semibold mb-6">Acompanhe seus empréstimos!</div>
               <div>
@@ -89,53 +89,20 @@ const ListCustomerBorrowings = () => {
                           <p className="mb-1"><strong>Frequência:</strong> {borrowing.frequency}</p>
                           <p className="mb-1"><strong>Status:</strong> {borrowing.status}</p>
                           <p className="mb-1"><strong>Desconto:</strong> R${borrowing.discount}</p>
+                          {borrowing.status === "CONCLUIDO" && (
+                              <button
+                                  className="btn btn-primary"
+                                  onClick={() => handleEvaluate(borrowing.id)}
+                              >
+                                Avaliar Agiota
+                              </button>
+                          )}
                         </div>
                       </Link>
                   ))}
                 </div>
               </div>
             </div>
-
-            <table className="table">
-              <thead>
-              <tr>
-                <th>ID</th>
-                <th>Valor</th>
-                <th>Número de Parcelas</th>
-                <th>Dia do Pagamento</th>
-                <th>Data Inicial</th>
-                <th>Frequência</th>
-                <th>Status</th>
-                <th>Desconto</th>
-                <th>Ações</th> {/* Coluna para o botão de ações */}
-              </tr>
-              </thead>
-              <tbody>
-              {borrowings.map((borrowing) => (
-                <tr key={borrowing.id}>
-                  <td>{borrowing.id}</td>
-                  <td>{borrowing.value}</td>
-                  <td>{borrowing.numberInstallments}</td>
-                  <td>{borrowing.payday}</td>
-                  <td>{borrowing.initialDate}</td>
-                  <td>{borrowing.frequency}</td>
-                  <td>{borrowing.status}</td>
-                  <td>{borrowing.discount}</td>
-                  <td>
-                    {/* Mostrar o botão Avaliar Agiota apenas se o empréstimo estiver CONCLUÍDO */}
-                    {borrowing.status === "CONCLUIDO" && (
-                      <button
-                        className="btn btn-primary"
-                        onClick={() => handleEvaluate(borrowing.id)}
-                      >
-                        Avaliar Agiota
-                      </button>
-                    )}
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
         )}
       </div>
     </ProtectedRoute>

@@ -118,7 +118,7 @@ const EditAgiota = () => {
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
-        <h2>Editar Informações AAAAAAAAAAAAdo Agiota</h2>
+        <h2>Editar Informações do Agiota</h2>
         <form onSubmit={handleSubmit}>
           {[
             { label: 'Nome', name: 'name', value: formData.name },

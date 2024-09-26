@@ -41,8 +41,10 @@ const Configurations = () => {
 
   return (
     <ProtectedRoute requiredRoles={["administrador", "customer"]}>
-     
-        <EditCustomer/>
+
+        <div className="mb-5">
+          <EditCustomer/>
+        </div>
  
     </ProtectedRoute>
   );

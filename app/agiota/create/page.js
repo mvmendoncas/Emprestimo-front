@@ -117,6 +117,7 @@ const RegisterAgiota = () => {
                           onChange={handleChange}
                           required
                       >
+                          <option value="0">Selecione uma opção</option>
                           <option value="weekly">Semanalmente</option>
                           <option value="monthly">Mensalmente</option>
                       </select>

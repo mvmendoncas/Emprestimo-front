@@ -29,14 +29,21 @@ const ListCustomerBorrowings = () => {
   return (
     <ProtectedRoute requiredRoles={["administrador", "customer"]}>
       <div className="container mt-5">
-        <h2>Lista de Empréstimos</h2>
         {loading ? (
           <p>Carregando...</p>
-        ) : borrowings.length === 0 ? (  
-          <p>Nenhum empréstimo encontrado.</p>
+        ) : borrowings.length === 0 ? (
+            <div>
+              <h2>Lista de Empréstimos</h2>
+              <p>Aqui você pode solicitar empréstimos de maneira rápida e prática. Se precisa de um apoio financeiro,
+                estamos prontos para ajudar. Com condições flexíveis e ajustadas às suas necessidades, você poderá
+                solicitar um empréstimo diretamente com o agiota e acompanhar todo o processo de forma segura e
+                transparente. Comece agora clicando em "Solicitar Empréstimo" e tenha o crédito que você precisa ao seu
+                alcance.</p>
+
+            </div>
         ) : (
-          <table className="table">
-            <thead>
+            <table className="table">
+              <thead>
               <tr>
                 <th>ID</th>
                 <th>Valor</th>
@@ -47,8 +54,8 @@ const ListCustomerBorrowings = () => {
                 <th>Status</th>
                 <th>Desconto</th>
               </tr>
-            </thead>
-            <tbody>
+              </thead>
+              <tbody>
               {borrowings.map((borrowing) => (
                 <tr key={borrowing.id}>
                   <td>{borrowing.id}</td>

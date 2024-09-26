@@ -134,9 +134,11 @@ const EditAgiota = () => {
                   onChange={handleChange}
                   required
                 >
-                  <option value="">Selecione o método de cobrança</option>
-                  <option value="weekly">Semanalmente</option>
-                  <option value="monthly">Mensalmente</option>
+                  <option value="0">Selecione uma opção</option>
+                    <option value="weekly">Semanalmente</option>
+                    <option value="biweekly">Quinzenalmente</option>
+                    <option value="monthly">Mensalmente</option>
+                    <option value="quarterly">Trimestralmente</option>
                 </select>
               </div>
   

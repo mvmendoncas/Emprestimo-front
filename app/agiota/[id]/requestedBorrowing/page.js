@@ -81,7 +81,7 @@ const RequestedBorrowing = () => {
           </div>
         </div>
 
-        <h3>Informações do Cliente</h3>
+        <h3 className="mt-3">Informações do Cliente</h3>
         <div className="card mb-3">
           <div className="card-body">
             <p><strong>Nome:</strong> {borrowing.customer.name}</p>

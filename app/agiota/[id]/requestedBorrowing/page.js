@@ -68,7 +68,7 @@ const RequestedBorrowing = () => {
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
-        <h2>Detalhes do Empréstimo Solicitado</h2>
+        <h2>Detalhes do Empréstimo</h2>
         <div className="card mb-3">
           <div className="card-body">
             <p><strong>Valor:</strong> {borrowing.value}</p>
@@ -95,7 +95,7 @@ const RequestedBorrowing = () => {
           </div>
         </div>
 
-        <div className="mt-3">
+        <div className="mt-3 mb-5">
           <button className="btn btn-success mr-2" onClick={handleAccept}>Aceitar</button>
           <button className="btn btn-danger" onClick={handleDeny}>Recusar</button>
         </div>

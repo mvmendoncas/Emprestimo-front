@@ -118,7 +118,7 @@ const EditAgiota = () => {
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
-        <h2>Editar Informações do Agiota</h2>
+        <h2>Editar Informações AAAAAAAAAAAAdo Agiota</h2>
         <form onSubmit={handleSubmit}>
           {[
             { label: 'Nome', name: 'name', value: formData.name },
@@ -164,7 +164,7 @@ const EditAgiota = () => {
             </select>
           </div>
 
-          <div className="d-flex justify-content-between">
+          <div className="d-flex mb-5 justify-content-between">
             {/* Botão para salvar alterações */}
             <button type="submit" className="btn btn-primary">
               Salvar Alterações

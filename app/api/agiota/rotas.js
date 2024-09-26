@@ -31,3 +31,7 @@ export async function deleteAgiota(id) {
 export async function denyRequest(id) {
     return await api.post(`borrowing/${id}/denied`)
 }
+
+export async function reviewAgiota(id) {
+    return await api.get(`review-agiota/${id}`)
+}

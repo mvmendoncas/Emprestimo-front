@@ -23,3 +23,7 @@ export async function searchCustomer(id) {
 export async function deleteCustomer(id) {
     return await api.delete(`customer/${id}`)
 }
+
+export async function reviewCustomer(id) {
+    return await api.get(`review-customer/${id}`)
+}

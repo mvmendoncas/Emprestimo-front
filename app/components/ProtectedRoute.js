@@ -1,4 +1,3 @@
-// src/components/ProtectedRoute.js
 "use client";
 
 import React from 'react';
@@ -12,7 +11,7 @@ const ProtectedRoute = ({ children, requiredRoles = [] }) => {
     roles: state.userLogin.roles,
   }));
 
-  // Se o estado de autenticação ainda não foi determinado, não renderiza nada
+  
   if (isAuthenticated === undefined) {
     return null;
   }

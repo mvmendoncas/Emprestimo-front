@@ -13,15 +13,15 @@ const Providers = ({ children }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      // Recupera os dados do usuário armazenados no localStorage
-      const username = localStorage.getItem('userlogin'); // Ajuste o nome da chave conforme o que você usa
-      const roles = JSON.parse(localStorage.getItem('roles')); // Certifique-se de que as roles estão armazenadas como JSON
+     
+      const username = localStorage.getItem('userlogin'); 
+      const roles = JSON.parse(localStorage.getItem('roles')); 
       const userId = localStorage.getItem('userId');
 
       if (username && roles) {
         store.dispatch(setUserLogin({ username, roles }));
       } else {
-        store.dispatch(clearUserLogin()); // Assegura que o estado está limpo se faltar informação
+        store.dispatch(clearUserLogin()); 
       }
     } else {
       store.dispatch(clearUserLogin());

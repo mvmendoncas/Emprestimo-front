@@ -1,5 +1,3 @@
-// components/Footer.js
-
 import {usePathname} from "next/navigation";
 
 const Footer = () => {

@@ -40,7 +40,7 @@ const Header = () => {
   const isCustomer = roles.includes("customer");
   const isAgiota = roles.includes("agiota");
 
-  // Função para redirecionar com base na role
+ 
   const handleAgiotaClick = () => {
     if (isAgiota) {
       router.push('/agiota');
@@ -54,7 +54,7 @@ const Header = () => {
   return (
     <header className="bg-dark text-white px-4 py-2">
       <div className={styles.Header}>
-        {/* O link "Agiota" agora redireciona conforme a role */}
+      
         <h1 
           className="text-2xl cursor-pointer" 
           onClick={handleAgiotaClick}
@@ -73,7 +73,7 @@ const Header = () => {
         {isAgiota && (
           <>
 
-            {/* Botão Criar Empréstimo */}
+          
             <div className="flex justify-center space-x-4">
               <button
                   className={styles.configuration__button}
@@ -83,7 +83,7 @@ const Header = () => {
               </button>
             </div>
 
-            {/* Botão Solicitações */}
+         
             <button
                 className={styles.configuration__button}
               onClick={() => router.push('/agiota/requests')}

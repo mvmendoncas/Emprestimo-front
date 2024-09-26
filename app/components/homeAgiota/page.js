@@ -2,13 +2,13 @@
 
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { listAgiotaBorrowings } from '@/app/api/agiota/rotas'; // Importe a função para listar empréstimos
+import { listAgiotaBorrowings } from '@/app/api/agiota/rotas'; 
 import ListAgiotaBorrowings from '@/app/agiota/listAgiotaBorrowings/page';
 
 const AgiotaHome = () => {
   const router = useRouter();
   const [hasNewRequests, setHasNewRequests] = useState(false);
-  const [hasCompletedBorrowings, setHasCompletedBorrowings] = useState(false); // Estado para empréstimos concluídos
+  const [hasCompletedBorrowings, setHasCompletedBorrowings] = useState(false); 
 
   useEffect(() => {
     const fetchBorrowings = async () => {
@@ -16,10 +16,10 @@ const AgiotaHome = () => {
         const response = await listAgiotaBorrowings();
         const borrowings = response.data;
 
-        // Verifica se há novas solicitações de empréstimo
+       
         const newRequests = borrowings.some(borrowing => borrowing.status === "SOLICITADO");
 
-        // Verifica se há empréstimos concluídos
+       
         const completedBorrowings = borrowings.some(borrowing => borrowing.status === "CONCLUIDO");
 
         setHasNewRequests(newRequests);
@@ -35,14 +35,14 @@ const AgiotaHome = () => {
   return (
     <div className="container mx-auto mt-10 p-6 text-center">
 
-      {/* Mensagem se houver novas solicitações de empréstimo */}
+      
       {hasNewRequests && (
         <div className="bg-yellow-100 border-l-4 border-yellow-500 text-yellow-700 p-4 mb-2">
           <p className="font-bold m-0">Você possui novas solicitações de empréstimo!</p>
         </div>
       )}
 
-      {/* Mensagem se houver empréstimos concluídos */}
+   
       {hasCompletedBorrowings && (
         <div className="bg-green-100 border-l-4 border-green-500 text-green-700 p-4 mb-2">
           <p className="font-bold m-0">Você tem um empréstimo concluído! Por favor, avalie o cliente.</p>

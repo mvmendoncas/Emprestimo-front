@@ -1,11 +1,10 @@
-// src/redux/userLogin/userLoginSlice.js
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
     username: '',
     roles: [],
     userId: null, 
-    isAuthenticated: false, // Inicialmente falso
+    isAuthenticated: false, 
 };
 
 const userLoginSlice = createSlice({

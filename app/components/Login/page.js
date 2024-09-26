@@ -1,4 +1,3 @@
-// app/components/Login/page.js
 "use client";
 import { useState } from "react";
 import { useMutation } from "react-query";
@@ -41,7 +40,7 @@ const Login = () => {
         },
         onError: (erro) => {
           console.error("Erro no login:", erro);
-          // Opcional: adicionar lógica para exibir uma mensagem de erro ao usuário
+          
         },
       }
   );

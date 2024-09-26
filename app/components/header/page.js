@@ -52,7 +52,7 @@ const Header = () => {
   const configurationPath = isCustomer ? '/customer/configurations' : (isAgiota ? '/agiota/configurations' : null);
 
   return (
-    <header className="bg-blue-800 text-white p-4">
+    <header className="bg-black text-white px-4 py-2">
       <div className={styles.Header}>
         {/* O link "Agiota" agora redireciona conforme a role */}
         <h1 
@@ -63,24 +63,24 @@ const Header = () => {
         </h1>
 
         {configurationPath && (
-          <Link href={configurationPath}>
-            <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">
-              Configurações
+          <Link href={configurationPath} className={styles.configuration__button}>
+            <button className="text-white">
+              Seu perfil
             </button>
           </Link>
         )}
 
         {isCustomer && (
           <>
-            <button 
-              className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded" 
+            <button
+              className={styles.configuration__button}
               onClick={() => router.push('/customer/borrowingsInProgress')}
             >
               Gerenciar seus empréstimos
             </button>
 
-            <button 
-              className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
+            <button
+              className={styles.configuration__button}
               onClick={() => router.push('/borrowing/list')}
             >
               Novo Empréstimo
@@ -91,9 +91,9 @@ const Header = () => {
         {isAuthenticated ? (
           <button
             onClick={handleLogout}
-            className="ml-auto bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
+            className={"ml-auto bg-transparent hover:bg-red-700 text-white font-bold py-2 px-4 rounded"}
           >
-            Logout
+            Sair
           </button>
         ) : (
           <Link href="/">

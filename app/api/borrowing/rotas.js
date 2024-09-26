@@ -29,11 +29,11 @@ export async function payInstallment(id, value) {
     return await api.post(`borrowing/${id}/installments/${value}/pay`)
 }
 
-export async function evaluateAgiota(id) {
-    return await api.post(`borrowing/evaluate-agiota/${id}`)
+export async function evaluateAgiota(id, note) {
+    return await api.post(`borrowing/evaluate-agiota/${id}`, note)
 }
 
 
-export async function evaluateCustomer(id) {
-    return await api.post(`borrowing/evaluate-customer/${id}`)
+export async function evaluateCustomer(id, note) {
+    return await api.post(`borrowing/evaluate-customer/${id}`, note)
 }

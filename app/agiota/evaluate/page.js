@@ -4,12 +4,60 @@ import { useState, useEffect } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { listAgiotaBorrowings } from '@/app/api/agiota/rotas';
-import { evaluateCustomer } from '@/app/api/borrowing/rotas';
 
 const ListAgiotaBorrowings = () => {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+
+  const [formData, setFormData] = useState({
+    name: '',
+    cpf: '',
+    email: '',
+    phone: '',
+    adress: {
+      road: '',
+      place: '',
+      number: '',
+      neighborhood: '',
+      city: '',
+      state: '',
+      cep: ''
+    },
+    fees: '',
+    billingMethod: '',
+  });
+
+  useEffect(() => {
+    const loadForm = async () => {
+      try {
+        const { data } = await searchAgiota(params.id);  
+        setFormData({
+          name: data.name || '',
+          email: data.email || '',
+          cpf: data.cpf || '',
+          phone: data.phone || '',
+          occupation: data.occupation || '',
+          workplace: data.workplace || '',
+          workPhone: data.workPhone || '',
+          adress: {
+            road: data.adress?.road || '',
+            place: data.adress?.place || '',
+            number: data.adress?.number || '',
+            neighborhood: data.adress?.neighborhood || '',
+            city: data.adress?.city || '',
+            state: data.adress?.state || '',
+            cep: data.adress?.cep || ''
+          },
+          fees: data.fees || '',
+          billingMethod: data.billingMethod || '',
+        });
+      } catch (error) {
+        console.error('Erro ao carregar as informações do cliente:', error);
+      }
+    };
+    loadForm();
+  }, [params.id]);
 
   useEffect(() => {
     const fetchBorrowings = async () => {
@@ -27,40 +75,21 @@ const ListAgiotaBorrowings = () => {
     fetchBorrowings();
   }, []);
 
-  // Função para enviar a avaliação
-  const handleEvaluate = async (id) => {
-    const note = prompt("Insira a nota para o cliente (de 1 a 5):");
+  const filteredBorrowings = borrowings.filter(borrowing => borrowing.status === "CONCLUIDO");
 
-    if (note && (note >= 1 && note <= 5)) {
-      try {
-        await evaluateCustomer(id, { note });
-        alert(`Avaliação enviada com sucesso!`);
-
-        // Atualizar o estado local para marcar o cliente como avaliado
-        setBorrowings(prevBorrowings => 
-          prevBorrowings.map(borrowing => 
-            borrowing.id === id ? { ...borrowing, customerEvaluated: true } : borrowing
-          )
-        );
-      } catch (error) {
-        console.error('Erro ao enviar avaliação:', error);
-        alert('Erro ao enviar avaliação.');
-      }
-    } else {
-      alert('Nota inválida. Por favor, insira uma nota entre 1 e 5.');
-    }
+  // Função para redirecionar para a página de detalhes do empréstimo
+  const handleViewDetails = (id) => {
+    router.push(`/borrowing/${id}/details`);
   };
-
-  const filteredBorrowings = borrowings.filter(borrowing => borrowing.status !== "SOLICITADO");
 
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
-        <h2>Lista de Empréstimos</h2>
+        <h2>Lista de Empréstimos Concluídos</h2>
         {loading ? (
           <p>Carregando...</p>
         ) : filteredBorrowings.length === 0 ? (
-          <p>Nenhum empréstimo encontrado.</p>
+          <p>Nenhum empréstimo concluído encontrado.</p>
         ) : (
           <table className="table">
             <thead>
@@ -73,7 +102,7 @@ const ListAgiotaBorrowings = () => {
                 <th>Frequência</th>
                 <th>Status</th>
                 <th>Desconto</th>
-                <th>Ações</th> {/* Adicionando uma coluna para ações */}
+                <th>Ações</th> {/* Coluna para ações */}
               </tr>
             </thead>
             <tbody>
@@ -88,21 +117,13 @@ const ListAgiotaBorrowings = () => {
                   <td>{borrowing.status}</td>
                   <td>{borrowing.discount}</td>
                   <td>
-                    {/* Botão de avaliar cliente, aparece apenas se o status for CONCLUÍDO */}
-                    {borrowing.status === "CONCLUIDO" && (
-                      borrowing.customerEvaluated ? (
-                        <button className="btn btn-secondary" disabled>
-                          Cliente Avaliado
-                        </button>
-                      ) : (
-                        <button
-                          className="btn btn-primary"
-                          onClick={() => handleEvaluate(borrowing.id)}
-                        >
-                          Avaliar Cliente
-                        </button>
-                      )
-                    )}
+                    {/* Botão Ver Detalhes */}
+                    <button
+                      className="btn btn-info"
+                      onClick={() => handleViewDetails(borrowing.id)}
+                    >
+                      Ver Detalhes
+                    </button>
                   </td>
                 </tr>
               ))}

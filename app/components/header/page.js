@@ -59,7 +59,7 @@ const Header = () => {
           className="text-2xl cursor-pointer" 
           onClick={handleAgiotaClick}
         >
-          Agiota
+          A.G.I.O.T.A
         </h1>
 
         {configurationPath && (
@@ -99,7 +99,7 @@ const Header = () => {
               className={styles.configuration__button}
               onClick={() => router.push('/customer/borrowingsInProgress')}
             >
-              Gerenciar seus empréstimos
+              Andamento
             </button>
 
             <button

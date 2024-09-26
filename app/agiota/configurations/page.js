@@ -4,6 +4,7 @@ import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute'; 
 import { currentUserAgiota, deleteAgiota } from '@/app/api/agiota/rotas';
+import EditAgiota from '../edit/page';
 
 const Configurations = () => {
   const router = useRouter();
@@ -40,23 +41,7 @@ const Configurations = () => {
 
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
-      <div className="container mx-auto mt-10 p-6 text-center">
-        <h1 className="text-4xl font-bold mb-4">Página do Agiota!</h1>
-        <div className="flex justify-center space-x-4">
-          <button
-            className="bg-orange-500 hover:bg-orange-700 text-white font-bold py-2 px-4 rounded"
-            onClick={() => router.push(`/agiota/edit/${userId}`)}
-          >
-            Editar
-          </button>
-          <button
-            className="bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded"
-            onClick={handleDelete} // Chama a função de deletar
-          >
-            Deletar
-          </button>
-        </div>
-      </div>
+      <EditAgiota/>
     </ProtectedRoute>
   );
 };

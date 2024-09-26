@@ -110,7 +110,7 @@ const Request = () => {
           </div>
         </div>
 
-        <h3>Informações do Agiota</h3>
+        <h3 className="mt-3">Informações do Agiota</h3>
         <div className="card">
           <div className="card-body">
             <p><strong>Nome:</strong> {agiota.name}</p>
@@ -123,7 +123,7 @@ const Request = () => {
           </div>
         </div>
         
-        <div className="mt-3">
+        <div className="mt-3 mb-5">
           <button className="btn btn-success" onClick={handleConfirm}>
             Confirmar Solicitação de Empréstimo
           </button>

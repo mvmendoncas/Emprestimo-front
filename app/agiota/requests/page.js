@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { useRouter } from 'next/navigation';
-import { acceptedRequest, listAgiotaBorrowings } from '@/app/api/agiota/rotas';
+import { acceptedRequest, listAgiotaBorrowings, denyRequest } from '@/app/api/agiota/rotas';
 
 const ListBorrowingsRequested = () => {
   const [borrowings, setBorrowings] = useState([]);
@@ -26,7 +26,6 @@ const ListBorrowingsRequested = () => {
     fetchBorrowings();
   }, []);
 
-  
   const filteredBorrowings = borrowings.filter(borrowing => borrowing.status === "SOLICITADO");
 
   // Função que lida com a aceitação do empréstimo
@@ -37,9 +36,7 @@ const ListBorrowingsRequested = () => {
       try {
         const response = await acceptedRequest(id);
         console.log(`Empréstimo ${id} aceito com sucesso:`, response.data);
-        
         alert(`Empréstimo ${id} foi aceito com sucesso!`);
-        
         setBorrowings(borrowings.filter(borrowing => borrowing.id !== id));
       } catch (error) {
         console.error('Erro ao aceitar o empréstimo:', error);
@@ -47,6 +44,24 @@ const ListBorrowingsRequested = () => {
       }
     }
   };
+
+  // Função que lida com a recusa do empréstimo
+  const handleDeny = async (id) => {
+    const confirmed = window.confirm('Você tem certeza que deseja recusar a solicitação deste empréstimo?');
+
+    if (confirmed) {
+      try {
+        const response = await denyRequest(id);
+        console.log(`Empréstimo ${id} recusado com sucesso:`, response.data);
+        alert(`Empréstimo ${id} foi recusado com sucesso!`);
+        setBorrowings(borrowings.filter(borrowing => borrowing.id !== id));
+      } catch (error) {
+        console.error('Erro ao recusar o empréstimo:', error);
+        alert('Ocorreu um erro ao recusar a solicitação do empréstimo.');
+      }
+    }
+  };
+
   return (
     <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
       <div className="container mt-5">
@@ -67,7 +82,7 @@ const ListBorrowingsRequested = () => {
                 <th>Frequência</th>
                 <th>Status</th>
                 <th>Desconto</th>
-                <th>Ações</th> {/* Nova coluna para o botão de ações */}
+                <th>Ações</th> {/* Nova coluna para os botões de ações */}
               </tr>
             </thead>
             <tbody>
@@ -85,6 +100,10 @@ const ListBorrowingsRequested = () => {
                     {/* Botão de aceitar */}
                     <button className="btn btn-success" onClick={() => handleAccept(borrowing.id)}>
                       Aceitar
+                    </button>
+                    {/* Botão de recusar */}
+                    <button className="btn btn-danger ml-2" onClick={() => handleDeny(borrowing.id)}>
+                      Recusar
                     </button>
                   </td>
                 </tr>

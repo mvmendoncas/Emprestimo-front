@@ -56,7 +56,7 @@ const RegisterAgiota = () => {
         .then(
           (result) => {
             console.log('Success:', result);
-            router.push('/agiota')
+            router.push('/components/welcome')
           }
         )
         .catch (

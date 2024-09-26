@@ -56,7 +56,7 @@ const RegisterCustomer = () => {
       .then(
         (result) => {
           console.log('Success:', result);
-          router.push('/customer')
+          router.push('/components/welcome')
         }
       )
       .catch (

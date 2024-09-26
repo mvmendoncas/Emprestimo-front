@@ -27,3 +27,7 @@ export async function searchAgiota(id) {
 export async function deleteAgiota(id) {
     return await api.delete(`agiota/${id}`)
 }
+
+export async function denyRequest(id) {
+    return await api.post(`borrowing/${id}/deny`)
+}

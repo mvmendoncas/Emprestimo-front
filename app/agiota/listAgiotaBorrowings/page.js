@@ -4,30 +4,41 @@ import { useState, useEffect } from 'react';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { useRouter } from 'next/navigation';
 import { listAgiotaBorrowings } from '@/app/api/agiota/rotas';
-import { evaluateCustomer } from '@/app/api/borrowing/rotas';
+import { evaluateCustomer, findBorrowing } from '@/app/api/borrowing/rotas';
 
 const ListAgiotaBorrowings = () => {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [evaluatedStatus, setEvaluatedStatus] = useState({}); 
   const router = useRouter();
 
   useEffect(() => {
     const fetchBorrowings = async () => {
       try {
         const response = await listAgiotaBorrowings();
-        console.log(response);
         setBorrowings(response.data);
+
+       
+        response.data.forEach(async (borrowing) => {
+          const data = await findBorrowing(borrowing.id);
+          const isCustomerEvaluated = data.data.listaAvaliacoes.some(
+            (avaliacao) => avaliacao.avaliado === "CLIENTE"
+          );
+          setEvaluatedStatus(prevState => ({
+            ...prevState,
+            [borrowing.id]: isCustomerEvaluated,
+          }));
+        });
       } catch (error) {
         console.error('Erro ao obter a lista de empréstimos:', error);
       } finally {
         setLoading(false);
       }
     };
- 
     fetchBorrowings();
   }, []);
 
-  
+  // Função para avaliar o cliente
   const handleEvaluate = async (id) => {
     const note = prompt("Insira a nota para o cliente (de 1 a 5):");
 
@@ -36,12 +47,11 @@ const ListAgiotaBorrowings = () => {
         await evaluateCustomer(id, { note });
         alert(`Avaliação enviada com sucesso!`);
 
-        
-        setBorrowings(prevBorrowings => 
-          prevBorrowings.map(borrowing => 
-            borrowing.id === id ? { ...borrowing, customerEvaluated: true } : borrowing
-          )
-        );
+        // Atualiza o estado local para marcar o cliente como avaliado
+        setEvaluatedStatus((prevState) => ({
+          ...prevState,
+          [id]: true,
+        }));
       } catch (error) {
         console.error('Erro ao enviar avaliação:', error);
         alert('Erro ao enviar avaliação.');
@@ -56,7 +66,7 @@ const ListAgiotaBorrowings = () => {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR'); 
+    return date.toLocaleDateString('pt-BR');
   };
 
   return (
@@ -67,11 +77,7 @@ const ListAgiotaBorrowings = () => {
         ) : filteredBorrowings.length === 0 ? (
             <div>
               <h1><b>A.G.I.O.T.A</b></h1>
-              <h5 className="mt-3">Aqui você pode gerenciar suas operações de crédito de forma simples e organizada. Nosso sistema permite que você ofereça empréstimos a clientes, estabelecendo condições personalizadas como valor, número de parcelas, taxas de juros e datas de pagamento.
-
-                Ao cadastrar seus empréstimos, você poderá acompanhar o status de cada operação, desde a solicitação até o pagamento completo. Além disso, é possível avaliar o perfil de cada cliente e ajustar suas ofertas de acordo com suas necessidades e histórico.
-
-                Comece cadastrando seu primeiro empréstimo e aproveite as funcionalidades que vão facilitar sua gestão financeira!</h5>
+              <h5 className="mt-3">Aqui você pode gerenciar suas operações de crédito de forma simples e organizada.</h5>
             </div>
         ) : (
             <div>
@@ -86,7 +92,6 @@ const ListAgiotaBorrowings = () => {
                   <th>Status</th>
                   <th>Desconto</th>
                   <th>Ações</th>
-                 
                 </tr>
                 </thead>
                 <tbody>
@@ -99,20 +104,20 @@ const ListAgiotaBorrowings = () => {
                       <td>{borrowing.status}</td>
                       <td>{borrowing.discount}</td>
                       <td>
-                       
+                        {/* Verificar se o cliente foi avaliado */}
                         {borrowing.status === "CONCLUIDO" && (
-                            borrowing.customerEvaluated ? (
-                                <button className="btn btn-secondary" disabled>
-                                  Cliente Avaliado
-                                </button>
-                            ) : (
-                                <button
-                                    className="btn btn-primary"
-                                    onClick={() => handleEvaluate(borrowing.id)}
-                                >
-                                  Avaliar Cliente
-                                </button>
-                            )
+                          evaluatedStatus[borrowing.id] ? (
+                            <button className="btn btn-secondary" disabled>
+                              Cliente Avaliado
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-primary"
+                              onClick={() => handleEvaluate(borrowing.id)}
+                            >
+                              Avaliar Cliente
+                            </button>
+                          )
                         )}
                       </td>
                     </tr>

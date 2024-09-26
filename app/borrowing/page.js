@@ -1,4 +1,3 @@
-// app/borrowing/create/page.js
 "use client";
 
 import React from 'react';

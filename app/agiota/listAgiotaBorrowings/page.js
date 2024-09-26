@@ -27,7 +27,7 @@ const ListAgiotaBorrowings = () => {
     fetchBorrowings();
   }, []);
 
-  // Função para enviar a avaliação
+  
   const handleEvaluate = async (id) => {
     const note = prompt("Insira a nota para o cliente (de 1 a 5):");
 
@@ -36,7 +36,7 @@ const ListAgiotaBorrowings = () => {
         await evaluateCustomer(id, { note });
         alert(`Avaliação enviada com sucesso!`);
 
-        // Atualizar o estado local para marcar o cliente como avaliado
+        
         setBorrowings(prevBorrowings => 
           prevBorrowings.map(borrowing => 
             borrowing.id === id ? { ...borrowing, customerEvaluated: true } : borrowing
@@ -56,7 +56,7 @@ const ListAgiotaBorrowings = () => {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+    return date.toLocaleDateString('pt-BR'); 
   };
 
   return (
@@ -86,7 +86,7 @@ const ListAgiotaBorrowings = () => {
                   <th>Status</th>
                   <th>Desconto</th>
                   <th>Ações</th>
-                  {/* Adicionando uma coluna para ações */}
+                 
                 </tr>
                 </thead>
                 <tbody>
@@ -99,7 +99,7 @@ const ListAgiotaBorrowings = () => {
                       <td>{borrowing.status}</td>
                       <td>{borrowing.discount}</td>
                       <td>
-                        {/* Botão de avaliar cliente, aparece apenas se o status for CONCLUÍDO */}
+                       
                         {borrowing.status === "CONCLUIDO" && (
                             borrowing.customerEvaluated ? (
                                 <button className="btn btn-secondary" disabled>

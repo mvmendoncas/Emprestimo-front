@@ -77,7 +77,7 @@ const ListAgiotaBorrowings = () => {
 
   const filteredBorrowings = borrowings.filter(borrowing => borrowing.status === "CONCLUIDO");
 
-  // Função para redirecionar para a página de detalhes do empréstimo
+ 
   const handleViewDetails = (id) => {
     router.push(`/borrowing/${id}/details`);
   };
@@ -102,7 +102,7 @@ const ListAgiotaBorrowings = () => {
                 <th>Frequência</th>
                 <th>Status</th>
                 <th>Desconto</th>
-                <th>Ações</th> {/* Coluna para ações */}
+                <th>Ações</th> 
               </tr>
             </thead>
             <tbody>
@@ -117,7 +117,7 @@ const ListAgiotaBorrowings = () => {
                   <td>{borrowing.status}</td>
                   <td>{borrowing.discount}</td>
                   <td>
-                    {/* Botão Ver Detalhes */}
+                    
                     <button
                       className="btn btn-info"
                       onClick={() => handleViewDetails(borrowing.id)}

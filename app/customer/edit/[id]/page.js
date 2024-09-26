@@ -1,20 +1,38 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams, useRouter } from 'next/navigation'
-import { currentUserAgiota, searchAgiota, editAgiota, deleteAgiota } from "@/app/api/agiota/rotas";
-import ProtectedRoute from "@/app/components/ProtectedRoute";
+import { useParams, useRouter } from 'next/navigation';
+import { searchCustomer, editCustomer, currentUserCustomer, deleteCustomer } from "@/app/api/customer/rotas";
+import ProtectedRoute from '@/app/components/ProtectedRoute'; 
 
-const EditAgiota = () => {
+const EditCustomer = () => {
   const router = useRouter();
   const params = useParams();
+
   const [userId, setUserId] = useState(null);
+
+  useEffect(() => {
+    const fetchUserId = async () => {
+      try {
+        const id = await currentUserCustomer();
+        setUserId(id.data.id);
+        console.log("Chegou aqui", id);
+      } catch (error) {
+        console.error('Erro ao obter o ID do usuário:', error);
+      }
+    };
+  
+    fetchUserId();
+  }, []);
 
   const [formData, setFormData] = useState({
     name: '',
-    cpf: '',
     email: '',
+    cpf: '',
     phone: '',
+    occupation: '',
+    workplace: '',
+    workPhone: '',
     adress: {
       road: '',
       place: '',
@@ -23,34 +41,22 @@ const EditAgiota = () => {
       city: '',
       state: '',
       cep: ''
-    },
-    fees: '',
-    billingMethod: '',
+    }
   });
-
-  useEffect(() => {
-    const fetchUserId = async () => {
-      try {
-        const id = await currentUserAgiota();
-        setUserId(id.data.id);
-        
-      } catch (error) {
-        console.error('Erro ao obter o ID do usuário:', error);
-      }
-    };
-
-    fetchUserId();
-  }, []);
 
   useEffect(() => {
     const loadForm = async () => {
       try {
-        const { data } = await searchAgiota(userId);  
+        const { data } = await searchCustomer(userId);  // Supondo que searchCustomer retorna os dados do cliente
+        
         setFormData({
           name: data.name || '',
           email: data.email || '',
           cpf: data.cpf || '',
           phone: data.phone || '',
+          occupation: data.occupation || '',
+          workplace: data.workplace || '',
+          workPhone: data.workPhone || '',
           adress: {
             road: data.adress?.road || '',
             place: data.adress?.place || '',
@@ -59,17 +65,15 @@ const EditAgiota = () => {
             city: data.adress?.city || '',
             state: data.adress?.state || '',
             cep: data.adress?.cep || ''
-          },
-          fees: data.fees || '',
-          billingMethod: data.billingMethod || '',
+          }
         });
       } catch (error) {
-        console.error('Erro ao carregar as informações do agiota:', error);
+        console.error('Erro ao carregar as informações do cliente:', error);
       }
     };
     loadForm();
   }, [userId]);
-
+      
   const handleChange = (e) => {
     const { name, value } = e.target;
     const [parent, child] = name.split('.');
@@ -91,21 +95,21 @@ const EditAgiota = () => {
     e.preventDefault();
     
     try {
-      await editAgiota(userId, formData);  
-      console.log('Agiota atualizado com sucesso');
-      router.push('/agiota');  
+      await editCustomer(userId, formData);  // Passe o ID do cliente e os dados atualizados
+      console.log('Cliente atualizado com sucesso');
+      router.push('/customer');  // Redireciona para a lista de clientes ou outra página após edição
     } catch (error) {
-      console.error('Erro ao atualizar o agiota:', error);
+      console.error('Erro ao atualizar o cliente:', error);
     }
   };
 
-  
+  // Lógica para deletar conta
   const handleDelete = async () => {
     const confirmed = window.confirm('Você tem certeza que deseja deletar a sua conta? Essa ação é irreversível.');
     
     if (confirmed) {
       try {
-        await deleteAgiota(userId);  
+        await deleteCustomer(userId);  
         alert('Conta deletada com sucesso!');
         router.push('/');  
       } catch (error) {
@@ -116,9 +120,9 @@ const EditAgiota = () => {
   };
 
   return (
-    <ProtectedRoute requiredRoles={["administrador", "agiota"]}>
+    <ProtectedRoute requiredRoles={["administrador", "customer"]}>
       <div className="container mt-5">
-        <h2>Editar Informações do Agiota</h2>
+        <h2>Editar Informações do Cliente</h2>
         <form onSubmit={handleSubmit}>
           {[
             { label: 'Nome', name: 'name', value: formData.name },
@@ -132,7 +136,9 @@ const EditAgiota = () => {
             { label: 'Cidade', name: 'adress.city', value: formData.adress.city },
             { label: 'Estado', name: 'adress.state', value: formData.adress.state },
             { label: 'CEP', name: 'adress.cep', value: formData.adress.cep },
-            { label: 'Taxa', name: 'fees', value: formData.fees, type: 'number' },
+            { label: 'Profissão', name: 'occupation', value: formData.occupation },
+            { label: 'Local de Trabalho', name: 'workplace', value: formData.workplace },
+            { label: 'Telefone do Trabalho', name: 'workPhone', value: formData.workPhone },
           ].map(({ label, name, value, type = 'text' }) => (
             <div className="mb-3" key={name}>
               <label className="form-label">{label}</label>
@@ -146,31 +152,14 @@ const EditAgiota = () => {
               />
             </div>
           ))}
-
-          <div className="mb-3">
-            <label className="form-label">Método de Cobrança</label>
-            <select
-              className="form-control"
-              name="billingMethod"
-              value={formData.billingMethod}
-              onChange={handleChange}
-              required
-            >
-              <option value="0">Selecione uma opção</option>
-              <option value="weekly">Semanalmente</option>
-              <option value="biweekly">Quinzenalmente</option>
-              <option value="monthly">Mensalmente</option>
-              <option value="quarterly">Trimestralmente</option>
-            </select>
-          </div>
-
-          <div className="d-flex mb-5 justify-content-between">
-            
+          
+          <div className="d-flex justify-content-between">
+            {/* Botão para salvar alterações */}
             <button type="submit" className="btn btn-primary">
               Salvar Alterações
             </button>
 
-            
+            {/* Botão para deletar conta */}
             <button
               type="button"
               className="btn btn-danger"
@@ -185,4 +174,4 @@ const EditAgiota = () => {
   );
 };
 
-export default EditAgiota;
+export default EditCustomer;

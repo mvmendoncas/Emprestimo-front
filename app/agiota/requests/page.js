@@ -31,7 +31,7 @@ const ListBorrowingsRequested = () => {
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
-    return date.toLocaleDateString('pt-BR'); // Formato dd/mm/yyyy
+    return date.toLocaleDateString('pt-BR'); 
   };
 
   return (

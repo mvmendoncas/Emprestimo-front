@@ -47,7 +47,7 @@ const Request = () => {
           discount: data.data.discount,
         });
         
-        // Preencher informações do agiota
+      
         setAgiota({
           name: data.data.agiota.name,
           username: data.data.agiota.username,

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import { listBorrowing } from '@/app/api/borrowing/rotas';
 import ProtectedRoute from '@/app/components/ProtectedRoute';
 import { useRouter } from 'next/navigation'
-
+  
 const ListBorrowings = () => {
   const [borrowings, setBorrowings] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -55,12 +55,10 @@ const ListBorrowings = () => {
                   {borrowings.map((borrowing) => (
                       <div key={borrowing.id}
                            className="bg-white shadow-md rounded-lg p-6">
-                        <h2 className="text-xl font-bold mb-2">Empréstimo ID: {borrowing.id}</h2>
                         <p className="mb-1"><strong>Valor:</strong> R${borrowing.value}</p>
                         <p className="mb-1"><strong>Parcelas:</strong> {borrowing.numberInstallments}</p>
                         <p className="mb-1"><strong>Dia do Pagamento:</strong> {borrowing.payday}</p>
                         <p className="mb-1"><strong>Data Inicial:</strong> {formatDate(borrowing.initialDate)}</p>
-                        <p className="mb-1"><strong>Frequência:</strong> {borrowing.frequency}</p>
                         <p className="mb-1"><strong>Status:</strong> {borrowing.status}</p>
                         <p className="mb-1"><strong>Desconto:</strong> R${borrowing.discount}</p>
                         <button

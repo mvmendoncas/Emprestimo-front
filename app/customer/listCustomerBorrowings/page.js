@@ -27,7 +27,7 @@ const ListCustomerBorrowings = () => {
 
     fetchBorrowings();
   }, []);
-
+ 
   const formatDate = (dateString) => {
     if (!dateString) return '';
     const date = new Date(dateString);
@@ -81,12 +81,10 @@ const ListCustomerBorrowings = () => {
                       <Link href={`/borrowing/${borrowing.id}/installments`} className="text-black no-underline">
                         <div key={borrowing.id}
                              className="bg-white shadow-md rounded-lg p-6 hover:shadow-lg transform hover:scale-105 transition duration-300">
-                          <h2 className="text-xl font-bold mb-2">Empréstimo ID: {borrowing.id}</h2>
                           <p className="mb-1"><strong>Valor:</strong> R${borrowing.value}</p>
                           <p className="mb-1"><strong>Parcelas:</strong> {borrowing.numberInstallments}</p>
                           <p className="mb-1"><strong>Dia do Pagamento:</strong> {borrowing.payday}</p>
                           <p className="mb-1"><strong>Data Inicial:</strong> {formatDate(borrowing.initialDate)}</p>
-                          <p className="mb-1"><strong>Frequência:</strong> {borrowing.frequency}</p>
                           <p className="mb-1"><strong>Status:</strong> {borrowing.status}</p>
                           <p className="mb-1"><strong>Desconto:</strong> R${borrowing.discount}</p>
                           {borrowing.status === "CONCLUIDO" && (

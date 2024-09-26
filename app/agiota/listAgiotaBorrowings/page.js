@@ -23,7 +23,7 @@ const ListAgiotaBorrowings = () => {
         setLoading(false);
       }
     };
-
+ 
     fetchBorrowings();
   }, []);
 
@@ -79,12 +79,10 @@ const ListAgiotaBorrowings = () => {
               <table className="table">
                 <thead>
                 <tr>
-                  <th>ID</th>
                   <th>Valor</th>
                   <th>Número de Parcelas</th>
                   <th>Dia do Pagamento</th>
                   <th>Data Inicial</th>
-                  <th>Frequência</th>
                   <th>Status</th>
                   <th>Desconto</th>
                   <th>Ações</th>
@@ -94,12 +92,10 @@ const ListAgiotaBorrowings = () => {
                 <tbody>
                 {filteredBorrowings.map((borrowing) => (
                     <tr key={borrowing.id}>
-                      <td>{borrowing.id}</td>
                       <td>{borrowing.value}</td>
                       <td>{borrowing.numberInstallments}</td>
                       <td>{borrowing.payday}</td>
                       <td>{formatDate(borrowing.initialDate)}</td>
-                      <td>{borrowing.frequency}</td>
                       <td>{borrowing.status}</td>
                       <td>{borrowing.discount}</td>
                       <td>

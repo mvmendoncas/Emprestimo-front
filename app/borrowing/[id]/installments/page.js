@@ -21,7 +21,7 @@ const Installments = () => {
     discount: '',
   });
 
-  // Carregar os dados do empréstimo
+  
   useEffect(() => {
     const loadForm = async () => {
       try {
@@ -43,7 +43,7 @@ const Installments = () => {
     loadForm();
   }, [params.id]);
 
-  // Carregar o ID do usuário
+  
   useEffect(() => {
     const fetchUserId = async () => {
       try {
@@ -57,7 +57,7 @@ const Installments = () => {
     fetchUserId();
   }, []);
 
-  // Carregar as parcelas do empréstimo
+  
   useEffect(() => {
     const loadInstallments = async () => {
       try {
@@ -71,15 +71,15 @@ const Installments = () => {
     loadInstallments();
   }, [params.id]);
 
-  // Função para processar o pagamento da parcela
+ 
   const handlePayment = async (installmentId, installmentValue) => {
     const confirmed = window.confirm('Você tem certeza que deseja efetuar o pagamento desta parcela?');
     if (confirmed) {
       try {
-        const response = await payInstallment(params.id, installmentId); // Chama a rota de pagamento
+        const response = await payInstallment(params.id, installmentId); 
         if (response.status === 200) {
           alert(`Pagamento da parcela ${installmentId} realizado com sucesso!`);
-          // Atualizar a lista de parcelas após o pagamento
+        
           const updatedInstallments = installments.map(installment => 
             installment.id === installmentId ? { ...installment, status: true } : installment
           );
@@ -115,7 +115,6 @@ const Installments = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Data de Pagamento</th>
                 <th>Status</th>
                 <th>Valor</th>
@@ -125,7 +124,6 @@ const Installments = () => {
             <tbody>
               {installments.map((installment) => (
                 <tr key={installment.id}>
-                  <td>{installment.id}</td>
                   <td>{new Date(installment.paymentDate).toLocaleDateString()}</td>
                   <td>{installment.status ? "Pago" : "Pendente"}</td>
                   <td>{installment.value.toFixed(2)}</td>

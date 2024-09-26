@@ -71,7 +71,6 @@ const RequestedBorrowing = () => {
         <h2>Detalhes do Empréstimo Solicitado</h2>
         <div className="card mb-3">
           <div className="card-body">
-            <h4>Empréstimo ID: {borrowing.id}</h4>
             <p><strong>Valor:</strong> {borrowing.value}</p>
             <p><strong>Número de Parcelas:</strong> {borrowing.numberInstallments}</p>
             <p><strong>Dia do Pagamento:</strong> {borrowing.payday}</p>

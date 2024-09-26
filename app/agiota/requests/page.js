@@ -39,7 +39,6 @@ const ListBorrowingsRequested = () => {
           <table className="table">
             <thead>
               <tr>
-                <th>ID</th>
                 <th>Valor</th>
                 <th>Informações do Solicitante</th>
                 <th>Número de Parcelas</th>
@@ -54,7 +53,6 @@ const ListBorrowingsRequested = () => {
             <tbody>
               {filteredBorrowings.map((borrowing) => (
                 <tr key={borrowing.id}>
-                  <td>{borrowing.id}</td>
                   <td>{borrowing.value}</td>
                   <td>
                    
